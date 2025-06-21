@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Link đến file JS của bạn -->
     <!-- Đảm bảo đường dẫn này là chính xác -->
     <script type="module" src="../src/js/register.js" defer></script>
-    
+
     <style>
         /* ... CSS của bạn giữ nguyên ở đây ... */
         :root {
@@ -31,7 +32,8 @@
             --orange-blob-color: rgba(255, 136, 0, 0.6);
         }
 
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -98,7 +100,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             color: var(--text-color);
         }
-        
+
         .form-container h2 {
             font-size: 2rem;
             font-weight: 600;
@@ -197,16 +199,19 @@
         }
     </style>
 </head>
+
 <body>
-    
+
     <div class="background-container">
         <div class="blob blue"></div>
         <div class="blob orange"></div>
 
         <div class="form-container">
             <form>
+                <h2><a href="/client/index.html">Quay lại Trang chủ </a></h2>
+
                 <h2>Đăng ký tài khoản </h2>
-                
+
                 <div class="form-group">
                     <!-- SỬA LỖI 3: Sửa lại 'for' cho đúng với id của input -->
                     <label for="email">Email</label>
@@ -237,4 +242,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
 
     <!-- Link đến file JS xử lý logic đăng nhập -->
     <script type="module" src="../src/js/login_logic.js" defer></script>
-    
+
     <!-- Tái sử dụng toàn bộ CSS từ trang đăng ký -->
     <style>
         :root {
@@ -30,7 +31,8 @@
             --orange-blob-color: rgba(255, 136, 0, 0.6);
         }
 
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -97,7 +99,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             color: var(--text-color);
         }
-        
+
         .form-container h2 {
             font-size: 2rem;
             font-weight: 600;
@@ -134,7 +136,8 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn-primary-action { /* Đổi tên class cho dễ hiểu hơn, bạn có thể giữ nguyên nếu muốn */
+        .btn-primary-action {
+            /* Đổi tên class cho dễ hiểu hơn, bạn có thể giữ nguyên nếu muốn */
             width: 100%;
             padding: 14px;
             background-color: var(--primary-button-bg);
@@ -180,7 +183,8 @@
             background-color: rgba(255, 255, 255, 0.25);
         }
 
-        .extra-link { /* Đổi tên class cho dễ hiểu hơn */
+        .extra-link {
+            /* Đổi tên class cho dễ hiểu hơn */
             text-align: center;
             font-size: 0.9rem;
         }
@@ -196,18 +200,21 @@
         }
     </style>
 </head>
+
 <body>
-    
     <div class="background-container">
         <div class="blob blue"></div>
+
         <div class="blob orange"></div>
 
         <div class="form-container">
             <form id="login-form">
                 <!-- THAY ĐỔI 1: Tiêu đề -->
+                <h2><a href="/client/index.html">Quay lại Trang chủ </a></h2>
                 <h2>Đăng nhập</h2>
                 
-                <div  class="form-group">
+
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" placeholder="Nhập email của bạn" required>
                 </div>
@@ -216,10 +223,10 @@
                     <label for="password">Mật khẩu </label>
                     <input type="password" id="password" placeholder="Nhập mật khẩu" required>
                 </div>
-                <h5 class="extra-link" ><a href ="forgot-password.html" >Quên mật khẩu </a></h5>
+                <h5 class="extra-link"><a href="forgot-password.html">Quên mật khẩu </a></h5>
                 <!-- THAY ĐỔI 2: ID và nội dung nút -->
                 <button type="submit" id="btn-login" class="btn-primary-action">Login</button>
-            </form >
+            </form>
 
             <div class="social-login">
                 <button class="btn-social">
@@ -234,9 +241,10 @@
             <p class="extra-link">
                 Chưa có tài khoản ? <a href="./dangky.html">Đăng ký</a>
             </p>
-            
+
         </div>
     </div>
-    
+
 </body>
+
 </html>
