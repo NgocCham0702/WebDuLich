@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đặt Phòng - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../src/css/admin_style.css"> 
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header"><h3>Admin Panel</h3></div>
+            <ul class="sidebar-menu">
+                <li><a href="admin.html"><i class="fas fa-users"></i> Người Dùng</a></li>
+                <li><a href="admin_destinations.html"><i class="fas fa-map-marked-alt"></i> Địa Điểm</a></li>
+                <li><a href="admin_hotels.html"><i class="fas fa-hotel"></i> Khách Sạn</a></li>
+                <li ><a href="admin_bookings.html" class="active"><i class="fas fa-calendar-check"></i> Đặt Phòng</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn btn-danger">Đăng Xuất</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="section-header">
+                <h2>Quản Lý Đặt Phòng</h2>
+                <a href="admin_booking_form.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Thêm Đơn Đặt Phòng
+                </a>
+            </header>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Khách Hàng</th>
+                            <th>Khách Sạn</th>
+                            <th>Ngày Nhận/Trả</th>
+                            <th>Tổng Tiền</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookings-table-body">
+                        <!-- Dữ liệu sẽ được JS tải vào đây -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="../src/js/admin_bookings.js"></script>
+</body>
+</html>

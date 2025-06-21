@@ -1,0 +1,370 @@
+/* =================================================================== */
+/* CSS FOR DESTINATIONS ADMIN PANEL */
+/* =================================================================== */
+
+/* --- GENERAL & FONT --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* --- DASHBOARD LAYOUT --- */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    background-color: #34495e;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: background-color 0.2s, padding-left 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-menu a:hover {
+    background-color: #34495e;
+    padding-left: 25px;
+}
+
+.sidebar-menu a.active {
+    background-color: #1abc9c;
+    border-left: 4px solid #16a085;
+    font-weight: 700;
+}
+
+.sidebar-menu a i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-footer {
+    padding: 20px;
+}
+
+
+/* --- MAIN CONTENT CONTAINER --- */
+.container {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* --- TABLE STYLES --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    font-weight: 700;
+    color: #495057;
+}
+
+tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+}
+.status-active { background-color: #28a745; }
+.status-inactive { background-color: #6c757d; }
+
+/* --- BUTTONS --- */
+.btn, button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-add {
+    background-color: #007bff;
+    color: white;
+}
+.btn-add:hover { background-color: #0056b3; }
+
+.actions .btn-edit { background-color: #ffc107; color: #212529; }
+.actions .btn-edit:hover { background-color: #e0a800; }
+
+.actions .btn-delete { background-color: #dc3545; color: white; }
+.actions .btn-delete:hover { background-color: #c82333; }
+
+.actions button {
+    margin-right: 8px;
+}
+
+
+/* --- MODAL (POPUP FORM) STYLES --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: auto; /* Allow scrolling if form is long */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 3% auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 900px; /* Use a larger max-width for this form */
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover, .close:focus {
+    color: #333;
+}
+
+
+/* --- FORM STYLES --- */
+#destinationForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#destinationForm h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+#destinationForm label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+#destinationForm input[type="text"],
+#destinationForm input[type="number"],
+#destinationForm input[type="url"],
+#destinationForm textarea,
+#destinationForm select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#destinationForm input:focus,
+#destinationForm textarea:focus,
+#destinationForm select:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#destinationForm input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+#destinationForm fieldset {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+#destinationForm legend {
+    padding: 0 10px;
+    font-weight: 700;
+    color: #0056b3;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.form-actions button {
+    padding: 12px 25px;
+    font-size: 16px;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+.form-actions button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.form-actions .btn-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+.form-actions .btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+    .container {
+        padding: 20px;
+    }
+    .form-grid {
+        grid-template-columns: 1fr; /* Stack columns on small screens */
+    }
+    .modal-content {
+        margin: 10% auto;
+    }
+}
+/* Thêm vào cuối file admin_destinations_style.css */
+
+.table-thumbnail {
+    width: 100px;
+    height: 70px;
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+/* Thêm vào cuối file admin_destinations_style.css */
+
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    min-height: 120px; /* Đảm bảo vùng có chiều cao tối thiểu */
+    background-color: #f9f9f9;
+}
+
+.preview-image-wrapper {
+    position: relative;
+    width: 150px;
+    height: 100px;
+}
+
+.preview-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.preview-banner-tag {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: rgba(0, 123, 255, 0.8);
+    color: white;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 3px;
+}

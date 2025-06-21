@@ -1,0 +1,306 @@
+<html class="scroll-smooth" lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>
+    Khám Phá - Du Lịch Thông Minh
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&amp;family=Poppins:wght@400;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-50 font-poppins min-h-screen flex flex-col">
+  <header class="fixed w-full bg-white/90 backdrop-blur-md shadow-lg z-50">
+    <div class="container mx-auto flex justify-between items-center px-6 py-4">
+      <!-- Phần logo giữ nguyên -->
+      <a class="text-3xl font-sacramento text-pink-600 tracking-wider hover:text-rose-500 transition flex items-center gap-2"
+        href="../client/index.html">
+        <img alt="Logo hình chiếc la bàn màu hồng pastel" class="w-10 h-10 animate-bounce" height="40"
+          src="https://storage.googleapis.com/a1aa/image/e67d88f9-94c4-4c53-4507-85a5dd30ea04.jpg" width="40" />
+        <span
+          class="relative before:absolute before:-bottom-2 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-rose-400 before:via-pink-500 before:to-purple-600 before:rounded before:opacity-70 before:blur-sm">
+          Khám Phá
+        </span>
+      </a>
+
+      <!-- Gom các mục bên phải vào một div để dễ quản lý -->
+      <div class="flex items-center gap-4">
+        <!-- Navigation cho màn hình lớn -->
+        <nav class="space-x-8 text-pink-600 font-semibold text-lg hidden md:flex">
+          <a class="relative group px-3 py-1 rounded-lg bg-gradient-to-r from-rose-400 via-pink-500 to-purple-600 text-white shadow-lg hover:shadow-2xl transition flex items-center gap-1"
+            href="/client/User/page/danh sach dia danh.html">
+            <i class="fas fa-map-marked-alt text-white text-xl"></i>
+            <span>Địa Danh</span>
+            <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-white rounded"></span>
+          </a>
+          <a class="relative group px-3 py-1 rounded-lg bg-gradient-to-r from-purple-500 via-pink-500 to-rose-400 text-white shadow-lg hover:shadow-2xl transition flex items-center gap-1"
+            href="../client/User/page/danh sach khach san.html">
+            <i class="fas fa-hotel text-white text-xl"></i>
+            <span>Khách Sạn</span>
+            <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-white rounded"></span>
+          </a>
+        </nav>
+
+        <!-- PHẦN THÊM MỚI 1: Nút cho khách (Chưa đăng nhập) -->
+        <div id="guest-controls" class="hidden md:flex items-center gap-3">
+          <a href="/client/User/dangnhap.html"
+            class="px-4 py-2 text-pink-600 font-semibold rounded-lg hover:bg-rose-100 transition">Đăng nhập</a>
+          <a href="./User/dangky.html"
+            class="px-4 py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-rose-400 via-pink-500 to-purple-600 shadow-md hover:shadow-lg transition">Đăng
+            ký</a>
+        </div>
+
+        <!-- PHẦN THÊM MỚI 2: Thông tin người dùng (Sau khi đăng nhập) -->
+        <div id="user-controls" class="hidden md:flex items-center gap-4">
+          <div class="flex items-center gap-2 cursor-pointer group">
+            <i class="fas fa-user-circle text-3xl text-pink-500 group-hover:text-rose-500 transition"></i>
+            <span id="user-name-display" class="font-semibold text-rose-700 group-hover:text-pink-600 transition">Tên
+              Tài Khoản</span>
+          </div>
+          <button id="logout-button" class="text-gray-500 hover:text-red-500 transition" title="Đăng xuất">
+            <i class="fas fa-sign-out-alt text-xl"></i>
+          </button>
+        </div>
+
+        <!-- Nút menu trên di động -->
+        <button aria-label="Mở menu" class="md:hidden text-pink-600 text-3xl focus:outline-none" id="menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu trên di động -->
+    <nav id="mobile-menu"
+      class="hidden flex-col bg-white shadow-xl absolute top-16 right-6 rounded-xl w-64 py-5 px-8 md:hidden z-40 ring-1 ring-rose-300">
+      <!-- Các mục điều hướng chính -->
+      <a class="block text-pink-600 font-semibold hover:text-rose-500 transition text-lg flex items-center gap-3"
+        href="./User/page/danh sach dia danh.html">
+        <i class="fas fa-map-marked-alt text-rose-400 text-xl"></i>
+        Địa Danh
+      </a>
+      <a class="block text-pink-600 font-semibold hover:text-rose-500 transition text-lg flex items-center gap-3 mt-4"
+        href="./User/page/danh sach khach san.html">
+        <i class="fas fa-hotel text-rose-400 text-xl"></i>
+        Khách Sạn
+      </a>
+
+      <!-- Đường kẻ phân cách -->
+      <hr class="my-4 border-rose-200">
+      <!-- PHẦN THÊM MỚI 3: Nút cho khách (trong menu di động) -->
+      <div id="mobile-guest-controls" class="flex flex-col space-y-4">
+        <a href="../client/User/dangnhap.html"
+          class="text-center px-4 py-2 text-pink-600 font-semibold rounded-lg bg-rose-50 border border-rose-200 hover:bg-rose-100 transition">Đăng
+          nhập</a>
+        <a href="../client/User/dangky.html"
+          class="text-center px-4 py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-rose-400 to-pink-500 shadow-md hover:shadow-lg transition">Đăng
+          ký</a>
+      </div>
+
+      <!-- PHẦN THÊM MỚI 4: Thông tin người dùng (trong menu di động) -->
+      <div id="mobile-user-controls" class="hidden flex-col space-y-4">
+        <div class="flex items-center gap-3 border-b border-rose-100 pb-4">
+          <i class="fas fa-user-circle text-pink-500 text-2xl"></i>
+          <span id="mobile-user-name-display" class="font-semibold text-rose-700">Tên Tài Khoản</span>
+        </div>
+        <button id="mobile-logout-button"
+          class="w-full flex items-center justify-center gap-3 px-4 py-2 text-red-500 font-semibold rounded-lg hover:bg-red-50 transition">
+          <i class="fas fa-sign-out-alt"></i>
+          Đăng xuất
+        </button>
+      </div>
+    </nav>
+  </header>
+  <main class="flex-grow container mx-auto px-6 pt-32 pb-16 max-w-6xl">
+    <section class="flex flex-col-reverse lg:flex-row items-center gap-12">
+      <div class="lg:w-1/2 text-center lg:text-left space-y-8">
+        <h1
+          class="text-6xl font-extrabold text-pink-700 leading-tight drop-shadow-lg font-sacramento flex items-center justify-center lg:justify-start gap-4">
+          <img alt="Logo hình chiếc la bàn màu hồng pastel" class="w-14 h-14 animate-bounce" height="56"
+            src="https://storage.googleapis.com/a1aa/image/e67d88f9-94c4-4c53-4507-85a5dd30ea04.jpg" width="56" />
+          Khám Phá Thế Giới
+        </h1>
+        <p class="text-rose-600 text-xl max-w-lg font-medium tracking-wide">
+          Hành trình nhẹ nhàng, tinh tế, và đầy cảm hứng cho những người yêu du lịch.
+        </p>
+        <div class="mt-10 flex justify-center lg:justify-start gap-6 text-pink-600">
+          <a aria-label="Facebook" class="hover:text-rose-500 transition text-3xl" href="https://facebook.com"
+            rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-facebook-square"></i>
+          </a>
+          <a aria-label="Instagram" class="hover:text-rose-500 transition text-3xl" href="https://instagram.com"
+            rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a aria-label="Twitter" class="hover:text-rose-500 transition text-3xl" href="https://twitter.com"
+            rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-twitter-square"></i>
+          </a>
+        </div>
+      </div>
+      <div class="lg:w-1/2 relative w-full max-w-md mx-auto">
+        <div class="rounded-3xl overflow-hidden shadow-2xl ring-8 ring-pink-300/50 animate-float">
+          <img alt="Vịnh Hạ Long với núi đá vôi và mặt nước xanh biếc dưới bầu trời trong xanh"
+            class="object-cover w-full h-full" height="400"
+            src="https://3.bp.blogspot.com/-SxWfY-YCjm0/XKrSbhpdjaI/AAAAAAAAAJ4/0SIoIBXA5kcqmkQPxZ9gIBMNXmDbUXDfgCEwYBhgL/s1600/vinh-ha-long-6_vietmytravel_dulichhue.jpg"
+            width="600" />
+        </div>
+        <div
+          class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-64 bg-gradient-to-r from-rose-400 via-pink-500 to-purple-600 rounded-full py-2 px-6 shadow-lg text-white font-semibold text-center tracking-wide animate-pulse select-none">
+          Hành Trình Mơ Ước Đang Chờ Bạn
+        </div>
+      </div>
+    </section>
+    <section class="mt-20 max-w-5xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-pink-700 mb-10 text-center font-sacramento">
+        Khám Phá Nhanh
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+        <article
+          class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-shadow cursor-pointer group">
+          <img alt="Hình ảnh bãi biển Nha Trang với cát trắng, nước biển trong xanh và bầu trời xanh trong sáng"
+            class="w-32 h-32 rounded-full object-cover mb-4 ring-4 ring-pink-300 group-hover:ring-pink-500 transition"
+            height="128" src="https://phunugioi.com/wp-content/uploads/2020/10/anh-nha-trang-820x513.jpg" width="128" />
+          <h3 class="text-xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Bãi Biển Nha Trang
+          </h3>
+          <p class="text-rose-500 font-medium text-sm">
+            Thiên đường biển xanh với cát trắng mịn và nắng vàng dịu dàng.
+          </p>
+        </article>
+        <article
+          class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-shadow cursor-pointer group">
+          <img alt="Hình ảnh Đà Lạt về đêm với ánh đèn lung linh và không gian mờ ảo"
+            class="w-32 h-32 rounded-full object-cover mb-4 ring-4 ring-rose-300 group-hover:ring-rose-500 transition"
+            height="128" src="https://haycafe.vn/wp-content/uploads/2022/01/Hinh-anh-Da-Lat-ve-dem.jpg" width="128" />
+          <h3 class="text-xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Đà Lạt Mộng Mơ
+          </h3>
+          <p class="text-rose-500 font-medium text-sm">
+            Thành phố ngàn hoa với khí hậu mát mẻ và không gian lãng mạn.
+          </p>
+        </article>
+        <article
+          class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-shadow cursor-pointer group">
+          <img alt="Hình ảnh một góc thành phố Hồ Chí Minh với ánh đèn vàng rực rỡ về đêm"
+            class="w-32 h-32 rounded-full object-cover mb-4 ring-4 ring-purple-300 group-hover:ring-purple-500 transition"
+            height="128" src="https://thesaigontimes.vn/wp-content/uploads/2022/10/Mot-goc-TPHCM.jpg" width="128" />
+          <h3 class="text-xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Hồ Chí Minh Sôi Động
+          </h3>
+          <p class="text-rose-500 font-medium text-sm">
+            Trung tâm văn hóa, kinh tế với nhiều điểm vui chơi hấp dẫn.
+          </p>
+        </article>
+      </div>
+    </section>
+    <section class="mt-20 max-w-5xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-pink-700 mb-10 text-center font-sacramento">
+        Tại Sao Chọn Chúng Tôi?
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+        <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition cursor-default">
+          <div
+            class="mx-auto mb-6 w-20 h-20 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 text-4xl">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-pink-600">
+            An Toàn &amp; Tin Cậy
+          </h3>
+          <p class="text-rose-500 font-medium">
+            Cam kết bảo mật thông tin và hỗ trợ khách hàng 24/7.
+          </p>
+        </div>
+        <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition cursor-default">
+          <div
+            class="mx-auto mb-6 w-20 h-20 flex items-center justify-center rounded-full bg-pink-100 text-pink-600 text-4xl">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-pink-600">
+            Đa Dạng Điểm Đến
+          </h3>
+          <p class="text-rose-500 font-medium">
+            Hàng trăm địa danh nổi tiếng trong và ngoài nước cho bạn lựa chọn.
+          </p>
+        </div>
+        <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition cursor-default">
+          <div
+            class="mx-auto mb-6 w-20 h-20 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 text-4xl">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-pink-600">
+            Dịch Vụ Tận Tâm
+          </h3>
+          <p class="text-rose-500 font-medium">
+            Đội ngũ hỗ trợ chuyên nghiệp luôn sẵn sàng giúp đỡ bạn.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer
+    class="bg-white border-t border-rose-200 py-8 text-center text-pink-600 font-semibold tracking-wide select-none">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 max-w-6xl">
+      <p>
+        © 2024 Khám Phá. Mọi quyền được bảo lưu.
+      </p>
+      <div class="flex gap-6 text-pink-600">
+        <a aria-label="Facebook" class="hover:text-rose-500 transition text-2xl" href="https://facebook.com"
+          rel="noopener noreferrer" target="_blank">
+          <i class="fab fa-facebook-square"></i>
+        </a>
+        <a aria-label="Instagram" class="hover:text-rose-500 transition text-2xl" href="https://instagram.com"
+          rel="noopener noreferrer" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a aria-label="Twitter" class="hover:text-rose-500 transition text-2xl" href="https://twitter.com"
+          rel="noopener noreferrer" target="_blank">
+          <i class="fab fa-twitter-square"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.querySelector('header nav.md\\:hidden');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    window.addEventListener('click', (e) => {
+      if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;600;700&display=swap');
+
+    .font-sacramento {
+      font-family: 'Sacramento', cursive;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+  <script type="module" src="../client/src/js/auth_check.js"></script>
+</body>
+
+</html>

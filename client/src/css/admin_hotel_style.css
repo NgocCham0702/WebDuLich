@@ -1,0 +1,325 @@
+/* =================================================================== */
+/* CSS FOR HOTELS ADMIN PANEL (ĐÃ ĐỒNG BỘ VỚI TRANG ĐỊA ĐIỂM) */
+/* =================================================================== */
+
+/* --- GENERAL & FONT --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* --- DASHBOARD LAYOUT (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    background-color: #34495e;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: background-color 0.2s, padding-left 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-menu a:hover {
+    background-color: #34495e;
+    padding-left: 25px;
+}
+
+.sidebar-menu a.active {
+    background-color: #1abc9c;
+    border-left: 4px solid #16a085;
+    font-weight: 700;
+}
+
+.sidebar-menu a i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-footer {
+    padding: 20px;
+}
+
+/* --- MAIN CONTENT CONTAINER (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+.container {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* --- TABLE STYLES (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    font-weight: 700;
+    color: #495057;
+}
+
+tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+}
+.status-active { background-color: #28a745; }
+.status-inactive { background-color: #6c757d; }
+
+/* --- BUTTONS (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+.btn, button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button#btnAddHotel { /* Đổi id cho nút thêm khách sạn */
+    background-color: #007bff;
+    color: white;
+}
+button#btnAddHotel:hover { background-color: #0056b3; }
+
+.actions .btn-edit { background-color: #ffc107; color: #212529; }
+.actions .btn-edit:hover { background-color: #e0a800; }
+
+.actions .btn-delete { background-color: #dc3545; color: white; }
+.actions .btn-delete:hover { background-color: #c82333; }
+
+.actions button {
+    margin-right: 8px;
+}
+
+/* --- MODAL (POPUP FORM) STYLES (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 3% auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 900px; /* Form khách sạn cũng có thể cần rộng */
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover, .close:focus { color: #333; }
+
+/* --- FORM STYLES (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+form label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 10px; /* Thêm khoảng cách phía trên label */
+    font-weight: 500;
+    color: #495057;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="number"],
+form input[type="time"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+form fieldset {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+form legend {
+    padding: 0 10px;
+    font-weight: 700;
+    color: #0056b3;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.form-actions button {
+    padding: 12px 25px;
+    font-size: 16px;
+}
+
+/* --- PHẦN CSS RIÊNG CHO FORM KHÁCH SẠN --- */
+
+#roomsContainer {
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+    background: #fdfdfd;
+    border-radius: 4px;
+}
+
+.room-group { /* Sửa tên class để khớp với JS */
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    align-items: end;
+}
+
+.room-group input {
+    margin: 0 !important;
+    padding: 10px !important;
+}
+
+.room-group .btn-remove-room { /* Sửa tên class để khớp với JS */
+    grid-column: 1 / -1; /* Nút xóa chiếm toàn bộ chiều rộng hàng cuối */
+    margin-top: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 8px;
+    font-size: 13px;
+}
+
+#btnAddRoom {
+    background-color: #17a2b8;
+    color: white;
+    margin-top: 10px;
+}
+#btnAddRoom:hover {
+    background-color: #117a8b;
+}
+
+/* --- RESPONSIVE DESIGN (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+    .container {
+        padding: 20px;
+    }
+    .modal-content {
+        margin: 10% auto;
+    }
+}

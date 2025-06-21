@@ -1,0 +1,480 @@
+<html class="scroll-smooth" lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Danh Sách Địa Danh - Khám Phá</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&amp;family=Poppins:wght@400;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <style>
+    /* Modal container hidden by default */
+    #modal {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Modal content scale and fade with rounded corners */
+    #modal-content {
+      transform: scale(0.8);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 2rem;
+      /* rounded-3xl */
+    }
+
+    #modal.show #modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    /* Custom scrollbar for modal content */
+    #modal-content::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    #modal-content::-webkit-scrollbar-track {
+      background: #fce7f3;
+      /* rose-100 */
+      border-radius: 9999px;
+    }
+
+    #modal-content::-webkit-scrollbar-thumb {
+      background-color: #ec4899;
+      /* pink-500 */
+      border-radius: 9999px;
+      border: 3px solid #fce7f3;
+      /* rose-100 */
+    }
+
+    /* Firefox scrollbar */
+    #modal-content {
+      scrollbar-width: thin;
+      scrollbar-color: #ec4899 #fce7f3;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-50 font-poppins min-h-screen flex flex-col">
+  <header class="fixed w-full bg-white/90 backdrop-blur-md shadow-lg z-50" role="banner">
+    <div class="container mx-auto flex justify-between items-center px-6 py-4">
+      <nav class="flex-1 flex items-start">
+        <a href="/client/index.html"
+          class="inline-flex items-center gap-3 px-5 py-3 bg-pink-600 text-white font-semibold rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-4 focus:ring-pink-300 transition transform hover:-translate-y-0.5 active:translate-y-0"
+          aria-label="Quay về trang chủ">
+          <i class="fas fa-home text-lg"></i>
+          <span class="text-lg">Trang Chủ</span>
+        </a>
+      </nav>
+      <div
+        class="hidden md:flex items-center gap-4 bg-rose-100 rounded-full px-4 py-2 shadow-md text-rose-600 font-semibold select-none"
+        aria-label="Thông báo nổi bật">
+        <i class="fas fa-bell text-xl animate-bounce"></i>
+        <span>Khuyến mãi đặc biệt: Giảm 20% cho đặt phòng sớm!</span>
+      </div>
+    </div>
+  </header>
+  <main class="container mx-auto px-6 pt-24 pb-16 max-w-7xl flex-grow relative" role="main">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-pink-700 mb-12 text-center font-sacramento">
+      Danh Sách Địa Danh Nổi Bật
+    </h1>
+    <section aria-label="Danh sách các địa danh du lịch" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <article
+        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer group transform-gpu hover:scale-[1.03] focus:scale-[1.03] focus:outline-none"
+        tabindex="0" role="button" aria-label="Bãi Biển Nha Trang" data-title="Bãi Biển Nha Trang"
+        data-description="Thiên đường biển xanh với cát trắng mịn và nắng vàng dịu dàng, điểm đến lý tưởng cho kỳ nghỉ thư giãn."
+        data-img="https://th.bing.com/th/id/R.c8821a1e38103e53d4301e3d1dc5d9a3?rik=jMyt6CHPFe9Y%2fA&amp;riu=http%3a%2f%2fmedia.dulich24.com.vn%2fdiemden%2fbai-bien-nha-trang-5768%2fbai-bien-nha-trang.jpg&amp;ehk=ziZ270BnGmRiuKkdE5c8Cf1FjEby3dyU%2f%2bZ9ABKKraU%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0"
+        data-content='
+      <h3 class="text-xl font-semibold mb-2">Giới thiệu</h3>
+      <p class="mb-4">Bãi Biển Nha Trang là một trong những bãi biển đẹp nhất Việt Nam, nổi tiếng với cát trắng mịn và nước biển trong xanh.</p>
+      <h3 class="text-xl font-semibold mb-2">Hoạt động</h3>
+      <ul class="list-disc list-inside mb-4">
+       <li>Tắm biển và thư giãn trên bãi cát trắng</li>
+       <li>Tham gia các hoạt động thể thao dưới nước như lặn biển, dù lượn</li>
+       <li>Tham quan các đảo gần đó bằng thuyền</li>
+      </ul>
+      <h3 class="text-xl font-semibold mb-2">Ẩm thực</h3>
+      <p class="mb-4">Bạn có thể thưởng thức hải sản tươi sống tại các nhà hàng ven biển với nhiều món đặc sản hấp dẫn.</p>
+      <h3 class="text-xl font-semibold mb-2">Lời khuyên</h3>
+      <p class="mb-6">Thời điểm lý tưởng để đến Nha Trang là từ tháng 1 đến tháng 8 khi thời tiết nắng đẹp và biển êm.</p>
+     '>
+        <div class="relative group">
+          <img alt="Bãi biển Nha Trang với cát trắng, nước biển trong xanh và bầu trời trong sáng"
+            class="w-full h-56 object-cover rounded-t-3xl" height="224" width="400"
+            src="https://th.bing.com/th/id/R.c8821a1e38103e53d4301e3d1dc5d9a3?rik=jMyt6CHPFe9Y%2fA&amp;riu=http%3a%2f%2fmedia.dulich24.com.vn%2fdiemden%2fbai-bien-nha-trang-5768%2fbai-bien-nha-trang.jpg&amp;ehk=ziZ270BnGmRiuKkdE5c8Cf1FjEby3dyU%2f%2bZ9ABKKraU%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-t-3xl transition-opacity cursor-pointer">
+            <span
+              class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
+              Xem Chi Tiết
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Bãi Biển Nha Trang
+          </h2>
+          <p class="text-rose-500 font-medium text-sm leading-relaxed">
+            Thiên đường biển xanh với cát trắng mịn và nắng vàng dịu dàng, điểm
+            đến lý tưởng cho kỳ nghỉ thư giãn.
+          </p>
+        </div>
+      </article>
+      <article
+        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer group transform-gpu hover:scale-[1.03] focus:scale-[1.03] focus:outline-none"
+        tabindex="0" role="button" aria-label="Đà Lạt Mộng Mơ" data-title="Đà Lạt Mộng Mơ"
+        data-description="Thành phố ngàn hoa với khí hậu mát mẻ quanh năm, không gian lãng mạn và nhiều điểm tham quan hấp dẫn."
+        data-img="https://1.bp.blogspot.com/-K_dwkb40TU0/XzXcrAl7t0I/AAAAAAAAXBc/C-Pe3qkh5AUBfvNOUCpUWK-G082hVk5QQCNcBGAsYHQ/s1920/Da%2BLat4.jpg"
+        data-content='
+      <h3 class="text-xl font-semibold mb-2">Giới thiệu</h3>
+      <p class="mb-4">Đà Lạt là thành phố nổi tiếng với khí hậu mát mẻ quanh năm và cảnh quan thiên nhiên tuyệt đẹp.</p>
+      <h3 class="text-xl font-semibold mb-2">Điểm tham quan</h3>
+      <ul class="list-disc list-inside mb-4">
+       <li>Hồ Xuân Hương</li>
+       <li>Thung Lũng Tình Yêu</li>
+       <li>Vườn hoa thành phố</li>
+      </ul>
+      <h3 class="text-xl font-semibold mb-2">Ẩm thực</h3>
+      <p class="mb-4">Đặc sản Đà Lạt như bánh tráng nướng, sữa đậu nành, và các loại rau củ tươi ngon.</p>
+      <h3 class="text-xl font-semibold mb-2">Lời khuyên</h3>
+      <p class="mb-6">Thời điểm đẹp nhất để đến Đà Lạt là từ tháng 11 đến tháng 3 khi thời tiết se lạnh và hoa nở rộ.</p>
+     '>
+        <div class="relative group">
+          <img alt="Phong cảnh Đà Lạt với đồi núi xanh mướt và hoa anh đào nở rộ"
+            class="w-full h-56 object-cover rounded-t-3xl" height="224" width="400"
+            src="https://1.bp.blogspot.com/-K_dwkb40TU0/XzXcrAl7t0I/AAAAAAAAXBc/C-Pe3qkh5AUBfvNOUCpUWK-G082hVk5QQCNcBGAsYHQ/s1920/Da%2BLat4.jpg" />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-t-3xl transition-opacity cursor-pointer">
+            <span
+              class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
+              Xem Chi Tiết
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Đà Lạt Mộng Mơ
+          </h2>
+          <p class="text-rose-500 font-medium text-sm leading-relaxed">
+            Thành phố ngàn hoa với khí hậu mát mẻ quanh năm, không gian lãng mạn
+            và nhiều điểm tham quan hấp dẫn.
+          </p>
+        </div>
+      </article>
+      <article
+        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer group transform-gpu hover:scale-[1.03] focus:scale-[1.03] focus:outline-none"
+        tabindex="0" role="button" aria-label="Hồ Chí Minh Sôi Động" data-title="Hồ Chí Minh Sôi Động"
+        data-description="Trung tâm kinh tế, văn hóa sôi động với nhiều điểm vui chơi, mua sắm và ẩm thực đa dạng."
+        data-img="https://btnmt.1cdn.vn/2022/12/23/bcp.cdnchinhphu.vn-334894974524682240-2022-12-23-_dien-tich-cac-quan-tai-ho-chi-minh-1-16717832922811126226268.jpg"
+        data-content='
+      <h3 class="text-xl font-semibold mb-2">Giới thiệu</h3>
+      <p class="mb-4">Thành phố Hồ Chí Minh là trung tâm kinh tế và văn hóa lớn nhất Việt Nam với nhiều điểm tham quan và hoạt động sôi động.</p>
+      <h3 class="text-xl font-semibold mb-2">Điểm tham quan</h3>
+      <ul class="list-disc list-inside mb-4">
+       <li>Chợ Bến Thành</li>
+       <li>Nhà thờ Đức Bà</li>
+       <li>Phố đi bộ Nguyễn Huệ</li>
+      </ul>
+      <h3 class="text-xl font-semibold mb-2">Ẩm thực</h3>
+      <p class="mb-4">Ẩm thực đa dạng với các món như bánh mì, phở, hủ tiếu và nhiều món ăn đường phố hấp dẫn.</p>
+      <h3 class="text-xl font-semibold mb-2">Lời khuyên</h3>
+      <p class="mb-6">Thời gian tốt nhất để tham quan là vào mùa khô từ tháng 12 đến tháng 4.</p>
+     '>
+        <div class="relative group">
+          <img alt="Toàn cảnh thành phố Hồ Chí Minh với các tòa nhà cao tầng và ánh đèn lung linh về đêm"
+            class="w-full h-56 object-cover rounded-t-3xl" height="224" width="400"
+            src="https://btnmt.1cdn.vn/2022/12/23/bcp.cdnchinhphu.vn-334894974524682240-2022-12-23-_dien-tich-cac-quan-tai-ho-chi-minh-1-16717832922811126226268.jpg" />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-t-3xl transition-opacity cursor-pointer">
+            <span
+              class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
+              Xem Chi Tiết
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Hồ Chí Minh Sôi Động
+          </h2>
+          <p class="text-rose-500 font-medium text-sm leading-relaxed">
+            Trung tâm kinh tế, văn hóa sôi động với nhiều điểm vui chơi, mua sắm
+            và ẩm thực đa dạng.
+          </p>
+        </div>
+      </article>
+      <article
+        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer group transform-gpu hover:scale-[1.03] focus:scale-[1.03] focus:outline-none"
+        tabindex="0" role="button" aria-label="Hà Nội Truyền Thống" data-title="Hà Nội Truyền Thống"
+        data-description="Thủ đô ngàn năm văn hiến với kiến trúc cổ kính, ẩm thực đặc sắc và văn hóa phong phú."
+        data-img="https://khoinguonsangtao.vn/wp-content/uploads/2022/09/hinh-anh-ha-noi-ve-dem.jpg" data-content='
+      <h3 class="text-xl font-semibold mb-2">Giới thiệu</h3>
+      <p class="mb-4">Hà Nội là thủ đô với lịch sử lâu đời, nổi bật với kiến trúc cổ kính và nền văn hóa phong phú.</p>
+      <h3 class="text-xl font-semibold mb-2">Điểm tham quan</h3>
+      <ul class="list-disc list-inside mb-4">
+       <li>Hồ Hoàn Kiếm</li>
+       <li>Phố cổ Hà Nội</li>
+       <li>Chùa Một Cột</li>
+      </ul>
+      <h3 class="text-xl font-semibold mb-2">Ẩm thực</h3>
+      <p class="mb-4">Ẩm thực đặc sắc với phở, bún chả, nem rán và nhiều món ăn truyền thống khác.</p>
+      <h3 class="text-xl font-semibold mb-2">Lời khuyên</h3>
+      <p class="mb-6">Thời gian đẹp để tham quan là mùa thu từ tháng 9 đến tháng 11 với thời tiết mát mẻ.</p>
+     '>
+        <div class="relative group">
+          <img alt="Phong cảnh Hà Nội về đêm với ánh đèn lung linh và kiến trúc cổ kính"
+            class="w-full h-56 object-cover rounded-t-3xl" height="224" width="400"
+            src="https://khoinguonsangtao.vn/wp-content/uploads/2022/09/hinh-anh-ha-noi-ve-dem.jpg" />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-t-3xl transition-opacity cursor-pointer">
+            <span
+              class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
+              Xem Chi Tiết
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Hà Nội Truyền Thống
+          </h2>
+          <p class="text-rose-500 font-medium text-sm leading-relaxed">
+            Thủ đô ngàn năm văn hiến với kiến trúc cổ kính, ẩm thực đặc sắc và văn
+            hóa phong phú.
+          </p>
+        </div>
+      </article>
+      <article
+        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer group transform-gpu hover:scale-[1.03] focus:scale-[1.03] focus:outline-none"
+        tabindex="0" role="button" aria-label="Hội An Cổ Kính" data-title="Hội An Cổ Kính"
+        data-description="Phố cổ Hội An với kiến trúc độc đáo, đèn lồng lung linh và nền ẩm thực phong phú."
+        data-img="https://toigingiuvedep.vn/wp-content/uploads/2021/08/hinh-anh-hoi-an-dep-nhat.jpg" data-content='
+      <h3 class="text-xl font-semibold mb-2">Giới thiệu</h3>
+      <p class="mb-4">Hội An là phố cổ nổi tiếng với kiến trúc cổ kính và đèn lồng rực rỡ về đêm.</p>
+      <h3 class="text-xl font-semibold mb-2">Điểm tham quan</h3>
+      <ul class="list-disc list-inside mb-4">
+       <li>Phố cổ Hội An</li>
+       <li>Cầu Nhật Bản</li>
+       <li>Chợ đêm Hội An</li>
+      </ul>
+      <h3 class="text-xl font-semibold mb-2">Ẩm thực</h3>
+      <p class="mb-4">Ẩm thực đa dạng với cao lầu, bánh mì Phượng và các món ăn địa phương đặc sắc.</p>
+      <h3 class="text-xl font-semibold mb-2">Lời khuyên</h3>
+      <p class="mb-6">Thời gian đẹp để tham quan là mùa khô từ tháng 2 đến tháng 8.</p>
+     '>
+        <div class="relative group">
+          <img alt="Phong cảnh Hội An với đèn lồng treo và sông vào lúc hoàng hôn"
+            class="w-full h-56 object-cover rounded-t-3xl" height="224" width="400"
+            src="https://toigingiuvedep.vn/wp-content/uploads/2021/08/hinh-anh-hoi-an-dep-nhat.jpg" />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-t-3xl transition-opacity cursor-pointer">
+            <span
+              class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
+              Xem Chi Tiết
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Hội An Cổ Kính
+          </h2>
+          <p class="text-rose-500 font-medium text-sm leading-relaxed">
+            Phố cổ Hội An với kiến trúc độc đáo, đèn lồng lung linh và nền ẩm thực
+            phong phú.
+          </p>
+        </div>
+      </article>
+      <article
+        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer group transform-gpu hover:scale-[1.03] focus:scale-[1.03] focus:outline-none"
+        tabindex="0" role="button" aria-label="Vịnh Hạ Long Kỳ Vĩ" data-title="Vịnh Hạ Long Kỳ Vĩ"
+        data-description="Kỳ quan thiên nhiên thế giới với hàng nghìn đảo đá vôi và cảnh sắc tuyệt đẹp."
+        data-img="https://static-images.vnncdn.net/files/publish/2022/7/27/ha-long-bay-1-852.jpg" data-content='
+      <h3 class="text-xl font-semibold mb-2">Giới thiệu</h3>
+      <p class="mb-4">Vịnh Hạ Long là kỳ quan thiên nhiên thế giới nổi tiếng với hàng nghìn đảo đá vôi và cảnh sắc ngoạn mục.</p>
+      <h3 class="text-xl font-semibold mb-2">Hoạt động</h3>
+      <ul class="list-disc list-inside mb-4">
+       <li>Du thuyền tham quan vịnh</li>
+       <li>Tham quan hang động</li>
+       <li>Chèo kayak và bơi lội</li>
+      </ul>
+      <h3 class="text-xl font-semibold mb-2">Lời khuyên</h3>
+      <p class="mb-6">Thời gian tốt nhất để tham quan là từ tháng 10 đến tháng 4 khi thời tiết mát mẻ và ít mưa.</p>
+     '>
+        <div class="relative group">
+          <img alt="Phong cảnh Vịnh Hạ Long với núi đá vôi và biển xanh trong nắng"
+            class="w-full h-56 object-cover rounded-t-3xl" height="224" width="400"
+            src="https://static-images.vnncdn.net/files/publish/2022/7/27/ha-long-bay-1-852.jpg" />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-t-3xl transition-opacity cursor-pointer">
+            <span
+              class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
+              Xem Chi Tiết
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-rose-600 mb-2 group-hover:text-pink-500 transition">
+            Vịnh Hạ Long Kỳ Vĩ
+          </h2>
+          <p class="text-rose-500 font-medium text-sm leading-relaxed">
+            Kỳ quan thiên nhiên thế giới với hàng nghìn đảo đá vôi và cảnh sắc tuyệt
+            đẹp.
+          </p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal"
+    class="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+    role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" hidden>
+    <div id="modal-content"
+      class="bg-white max-w-5xl w-full max-h-[90vh] overflow-auto shadow-2xl relative transform scale-90 opacity-0 rounded-3xl">
+      <button id="modal-close" aria-label="Đóng"
+        class="absolute top-4 right-4 text-rose-600 hover:text-rose-800 text-4xl font-bold focus:outline-none">
+        &times;
+      </button>
+      <img id="modal-img" alt="" class="w-full h-[400px] object-cover rounded-t-3xl" src="" width="800" height="400" />
+      <div class="p-8">
+        <h2 id="modal-title" class="text-4xl font-bold text-pink-700 mb-6 font-sacramento"></h2>
+        <p id="modal-desc" class="text-rose-600 text-lg leading-relaxed mb-6"></p>
+        <div id="modal-extra-content" class="text-rose-600 text-base leading-relaxed mb-6"></div>
+        <a id="modal-book-btn" href="./danh sach khach san.html" target="_blank" rel="noopener noreferrer"
+          class="inline-block bg-pink-600 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-4 focus:ring-pink-300 transition transform hover:-translate-y-1 active:translate-y-0 text-xl">
+          <i class="fas fa-hotel mr-3"></i>Đặt Khách Sạn
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer
+    class="bg-white border-t border-rose-200 py-8 text-center text-pink-600 font-semibold tracking-wide select-none"
+    role="contentinfo">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 max-w-6xl">
+      <p>© 2024 Khám Phá. Mọi quyền được bảo lưu.</p>
+      <div class="flex gap-6 text-pink-600">
+        <a aria-label="Facebook" class="hover:text-rose-500 transition text-2xl" href="https://facebook.com"
+          rel="noopener noreferrer" target="_blank">
+          <i class="fab fa-facebook-square"></i>
+        </a>
+        <a aria-label="Instagram" class="hover:text-rose-500 transition text-2xl" href="https://instagram.com"
+          rel="noopener noreferrer" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a aria-label="Twitter" class="hover:text-rose-500 transition text-2xl" href="https://twitter.com"
+          rel="noopener noreferrer" target="_blank">
+          <i class="fab fa-twitter-square"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuBtn?.addEventListener("click", () => {
+      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
+      menuBtn.setAttribute("aria-expanded", !expanded);
+      mobileMenu.classList.toggle("hidden");
+    });
+    window.addEventListener("click", (e) => {
+      if (
+        menuBtn &&
+        mobileMenu &&
+        !menuBtn.contains(e.target) &&
+        !mobileMenu.contains(e.target)
+      ) {
+        mobileMenu.classList.add("hidden");
+        menuBtn.setAttribute("aria-expanded", false);
+      }
+    });
+
+    // Modal elements
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modal-content");
+    const modalImg = document.getElementById("modal-img");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDesc = document.getElementById("modal-desc");
+    const modalExtraContent = document.getElementById("modal-extra-content");
+    const modalBookBtn = document.getElementById("modal-book-btn");
+    const modalClose = document.getElementById("modal-close");
+
+    function openModal(title, description, imgSrc, imgAlt, extraContent) {
+      modalImg.src = imgSrc;
+      modalImg.alt = imgAlt;
+      modalTitle.textContent = title;
+      modalDesc.textContent = description;
+      modalExtraContent.innerHTML = extraContent || "";
+      modal.removeAttribute("hidden");
+      // Trigger reflow to enable transition
+      void modalContent.offsetWidth;
+      modal.classList.add("show");
+      modalContent.classList.add("scale-100", "opacity-100");
+      modalContent.classList.remove("scale-90", "opacity-0");
+      document.body.style.overflow = "hidden";
+      // Show the booking button
+      modalBookBtn.style.display = "inline-block";
+    }
+
+    function closeModal() {
+      modal.classList.remove("show");
+      modalContent.classList.remove("scale-100", "opacity-100");
+      modalContent.classList.add("scale-90", "opacity-0");
+      document.body.style.overflow = "";
+      // Wait for transition to end before hiding modal
+      modalContent.addEventListener(
+        "transitionend",
+        () => {
+          modal.setAttribute("hidden", "");
+        },
+        { once: true }
+      );
+    }
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.hasAttribute("hidden")) {
+        closeModal();
+      }
+    });
+
+    document.querySelectorAll("article[role='button']").forEach((article) => {
+      article.addEventListener("click", () => {
+        const title = article.getAttribute("data-title");
+        const description = article.getAttribute("data-description");
+        const imgSrc = article.getAttribute("data-img");
+        const imgAlt = article.querySelector("img")?.alt || title;
+        const extraContent = article.getAttribute("data-content");
+        openModal(title, description, imgSrc, imgAlt, extraContent);
+      });
+      article.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          article.click();
+        }
+      });
+    });
+  </script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;600;700&display=swap");
+
+    .font-sacramento {
+      font-family: "Sacramento", cursive;
+    }
+  </style>
+</body>
+
+</html>

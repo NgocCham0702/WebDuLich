@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Quản Lý Địa Điểm</title>
+    <!-- Giả sử bạn có file CSS chung cho admin -->
+    <link rel="stylesheet" href="/client/src/css/admin_destinations_style.css" />
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar (giữ nguyên hoặc sao chép từ trang khác) -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin.html"><i class="fas fa-users"></i> Người Dùng</a></li>
+                <li><a href="admin_destinations.html" class="active"><i class="fas fa-map-marked-alt"></i> Địa Điểm</a>
+                </li>
+                <li><a href="admin_hotels.html"><i class="fas fa-hotel"></i> Khách Sạn</a></li>
+                <li><a href="admin_bookings.html"><i class="fas fa-calendar-check"></i> Đặt Phòng</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</button>
+            </div>
+        </nav>
+
+        <!-- Nội dung chính -->
+        <div class="container">
+            <h1>Quản Lý Danh sách Địa điểm</h1>
+            <button id="btnAddDestination" class="btn btn-add">Thêm địa điểm mới</button>
+            <table id="destinationTable">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Ảnh bìa</th> <!-- THÊM CỘT NÀY -->
+
+                        <th>Tên Địa Điểm</th>
+                        <th>Vị Trí</th>
+                        <th>Trạng Thái</th>
+                        <th style="width: 200px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dữ liệu sẽ được đổ vào đây -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Form Thêm / Sửa Địa điểm (Modal) -->
+    <div id="destinationFormModal" class="modal">
+        <div class="modal-content large">
+            <span class="close">×</span>
+            <h2 id="formTitle">Thêm Địa điểm</h2>
+            <form id="destinationForm">
+                <input type="hidden" id="destinationId" />
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Tên Địa điểm:</label>
+                        <input type="text" id="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="slug">Slug (tự động tạo):</label>
+                        <input type="text" id="slug" readonly />
+                    </div>
+                </div>
+
+                <label for="title">Tiêu đề chính:</label>
+                <input type="text" id="title" required />
+
+                <label for="slogan">Slogan/Khẩu hiệu:</label>
+                <textarea id="slogan" rows="2" required></textarea>
+
+                <fieldset>
+                    <legend>Giới thiệu</legend>
+                    <label for="intro_heading">Tiêu đề mục giới thiệu:</label>
+                    <input type="text" id="intro_heading" required value="Giới thiệu" />
+                    <label for="intro_content">Nội dung giới thiệu:</label>
+                    <textarea id="intro_content" rows="3" required></textarea>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Điểm tham quan</legend>
+                    <label for="attractions_heading">Tiêu đề mục điểm tham quan:</label>
+                    <input type="text" id="attractions_heading" required value="Điểm tham quan" />
+                    <label for="attractions_list">Danh sách (ngăn cách bằng dấu phẩy):</label>
+                    <textarea id="attractions_list" rows="3"
+                        placeholder="Hồ Xuân Hương, Thung Lũng Tình Yêu, ..."></textarea>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Ẩm thực</legend>
+                    <label for="cuisine_heading">Tiêu đề mục ẩm thực:</label>
+                    <input type="text" id="cuisine_heading" required value="Ẩm thực" />
+                    <label for="cuisine_content">Nội dung ẩm thực:</label>
+                    <textarea id="cuisine_content" rows="3"></textarea>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Lời khuyên</legend>
+                    <label for="best_time_heading">Tiêu đề mục lời khuyên:</label>
+                    <input type="text" id="best_time_heading" required value="Lời khuyên" />
+                    <label for="best_time_content">Nội dung lời khuyên:</label>
+                    <textarea id="best_time_content" rows="3"></textarea>
+                </fieldset>
+
+                <label for="imageUrls">Ảnh (URL, ngăn cách bằng dấu phẩy):</label>
+                <textarea id="imageUrls" rows="3"
+                    placeholder="URL ảnh bìa đầu tiên, sau đó đến các ảnh khác..."></textarea>
+                <div id="imagePreviewContainer" class="image-preview-container"></div>
+
+
+                <label for="tags">Thẻ (tags, ngăn cách bằng dấu phẩy):</label>
+                <input type="text" id="tags" placeholder="lãng mạn, thiên nhiên, ..." />
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="location">Vị trí địa lý:</label>
+                        <input type="text" id="location" required placeholder="Miền Trung, Việt Nam" />
+                    </div>
+                    <div class="form-group">
+                        <label for="isActive">Trạng thái:</label>
+                        <select id="isActive" required>
+                            <option value="true">Hoạt động</option>
+                            <option value="false">Đã ẩn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Lưu</button>
+                    <button type="button" class="btn-cancel">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sửa thẻ script để sử dụng module và trỏ đúng file JS -->
+    <script type="module" src="../src/js/admin_destinations_script.js"></script>
+</body>
+
+</html>

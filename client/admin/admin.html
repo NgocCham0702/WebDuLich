@@ -1,0 +1,67 @@
+<!--admin.html-->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Người Dùng - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Link đến file CSS chung cho admin -->
+    <link rel="stylesheet" href="../src/css/admin_style.css">
+
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- ===== SIDEBAR (Dùng chung cho các trang admin) ===== -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <!-- Chuyển hướng giữa các trang quản lý -->
+                <li><a href="#" class="active"><i class="fas fa-users"></i> Người Dùng</a></li>
+                <li><a href="admin_destinations.html"><i class="fas fa-map-marked-alt"></i> Địa Điểm</a></li>
+                <li><a href="admin_hotels.html"><i class="fas fa-hotel"></i> Khách Sạn</a></li>
+                <li><a href="admin_bookings.html"><i class="fas fa-calendar-check"></i> Đặt Phòng</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</button>
+            </div>
+        </nav>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content">
+            <header class="section-header">
+                <h2>Quản Lý Người Dùng</h2>
+                <!-- Trang này không có nút "Thêm mới" vì người dùng tự đăng ký -->
+            </header>
+            
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Vai trò</th>
+                            <th>Trạng Thái</th>
+                            <th>Ngày tham gia</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- 
+        Loại script là "module" để có thể sử dụng import/export.
+        File này sẽ điều khiển toàn bộ logic cho trang Quản lý Người dùng.
+    -->
+
+    <script type="module" src="../src/js/admin_user.js"></script>
+</body>
+</html>

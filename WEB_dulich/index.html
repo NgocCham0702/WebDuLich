@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trang chủ - Website Du Lịch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/search_suggestions.js"></script>
+  <script src="js/search_expand.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header-banner">
+  <div class="header-top container">
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Logo Du Lịch" />
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="active">Trang chủ</a></li>
+        <li><a href="destinations.html">Địa danh</a></li>
+        <li><a href="hotels.html">Khách sạn</a></li>
+        <li><a href="booking.html">Đặt phòng</a></li>
+      </ul>
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm địa danh, khách sạn, tour..." autocomplete="off" />
+        <button>Tìm kiếm</button>
+        <ul class="suggestions-list"></ul>
+      </div>
+
+
+    </nav>
+  </div>
+  </header>
+
+  <!-- Slider -->
+  <div class="slider-wrapper">
+    <div class="slider" id="slider">
+      <button class="slider-btn prev" id="prevBtn">&#10094;</button>
+      <div class="slides">
+        <div class="slide"><img src="images/banner.jpg" alt="Slide 1" /></div>
+        <div class="slide"><img src="images/banner.jpg" alt="Slide 2" /></div>
+        <div class="slide"><img src="images/banner.jpg" alt="Slide 3" /></div>
+      </div>
+      <button class="slider-btn next" id="nextBtn">&#10095;</button>
+    </div>
+  </div>
+
+  <section class="overview container">
+    <h2>Khám phá thế giới cùng chúng tôi</h2>
+    <p>Chúng tôi chuyên cung cấp các tour du lịch, khách sạn, dịch vụ đặt phòng với giá tốt nhất và đa dạng lựa chọn. Mang đến trải nghiệm tốt nhất cho bạn khi sử dụng dịch vụ của chúng tôi!</p>
+    <div class="overview-cards">
+      <div class="overview-card">
+        <h3>Tour đa dạng</h3>
+        <p>Hàng ngàn tour du lịch trong và ngoài nước.</p>
+      </div>
+      <div class="overview-card">
+        <h3>Giá cả hợp lý</h3>
+        <p>Ưu đãi hấp dẫn, tiết kiệm chi phí.</p>
+      </div>
+      <div class="overview-card">
+        <h3>Hỗ trợ 24/7</h3>
+        <p>Đội ngũ hỗ trợ khách hàng tận tâm, nhanh chóng.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="featured-destinations">
+      <h2>Địa danh nổi bật</h2>
+      <div class="destinations-grid">
+        <div class="destination-card">
+          <img src="images/VHL.jpg" alt="Địa danh 1" />
+          <h3>Vịnh Hạ Long</h3>
+          <p>Khám phá kỳ quan thiên nhiên thế giới.</p>
+          <a href="destination_detail.html">Xem chi tiết</a>
+        </div>
+        <div class="destination-card">
+          <img src="images/PQ.jpg" alt="Địa danh 2" />
+          <h3>Phú Quốc</h3>
+          <p>Bãi biển tuyệt đẹp và thiên nhiên hoang sơ.</p>
+          <a href="destination_detail.html">Xem chi tiết</a>
+        </div>
+        <!-- Thêm các địa danh khác -->
+      </div>
+    </section>
+
+    <section class="why-choose-us">
+      <h2>Tại sao chọn chúng tôi?</h2>
+      <div class="reasons-grid">
+        <div class="reason-item">
+          <h3>Vô vàn lựa chọn</h3>
+          <p>Hàng ngàn địa điểm và dịch vụ đa dạng.</p>
+        </div>
+        <div class="reason-item">
+          <h3>Giá tốt</h3>
+          <p>Ưu đãi hấp dẫn, tiết kiệm chi phí.</p>
+        </div>
+        <div class="reason-item">
+          <h3>Dễ dàng và tiện lợi</h3>
+          <p>Đặt vé nhanh chóng, xác nhận tức thì.</p>
+        </div>
+        <div class="reason-item">
+          <h3>Đáng tin cậy</h3>
+          <p>Hỗ trợ khách hàng tận tình mọi lúc.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Website Du Lịch. Bản quyền thuộc về bạn.</p>
+  </footer>
+  <script src="js/slider.js"></script>
+</body>
+</html>

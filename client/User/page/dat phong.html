@@ -1,0 +1,446 @@
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Đặt Phòng - Khách Sạn</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    .font-sacramento {
+      font-family: "Sacramento", cursive;
+    }
+    fieldset {
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+      border-width: 2px;
+      border-color: #ec4899;
+    }
+    legend {
+      background: #ec4899;
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 1.125rem;
+      box-shadow: 0 2px 6px rgba(236, 72, 153, 0.6);
+    }
+    select option.disabled-option {
+      color: #9ca3af; /* Tailwind gray-400 */
+    }
+    /* Animation for success/fail message */
+    @keyframes slideDownFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    #messageBox {
+      position: fixed;
+      top: 1rem;
+      left: calc(50% - 3cm);
+      transform: translateX(-50%) scale(0.75);
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      font-weight: 700;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      pointer-events: none;
+      animation-fill-mode: forwards;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      max-width: 90vw;
+      white-space: nowrap;
+      z-index: 10000;
+    }
+    #messageBox.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) scale(1);
+      animation: slideDownFadeIn 0.5s ease forwards;
+    }
+    #messageBox.success {
+      background-color: #22c55e; /* Tailwind green-500 */
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.6);
+    }
+    #messageBox.fail {
+      background-color: #dc2626; /* Tailwind red-600 */
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.6);
+    }
+    #messageBox i {
+      font-size: 1.75rem;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-50 font-poppins min-h-screen flex flex-col">
+  <header class="fixed w-full top-0 left-0 z-50 bg-transparent px-6 py-4 flex justify-start max-w-7xl mx-auto">
+    <a
+      aria-label="Trang chủ Khám Phá"
+      class="inline-flex items-center gap-3 bg-pink-600 text-white font-semibold rounded-full shadow-lg px-6 py-3 hover:bg-pink-700 focus:outline-none focus:ring-4 focus:ring-pink-300 transition transform hover:-translate-y-0.5 active:translate-y-0"
+      href="/client/index.html"
+    >
+      <i class="fas fa-home text-xl"></i>
+      <span class="text-lg">Trang Chủ</span>
+    </a>
+  </header>
+  <main class="container mx-auto px-6 pt-28 pb-16 max-w-4xl flex-grow flex flex-col">
+    <h1 class="text-5xl font-extrabold text-pink-700 text-center font-sacramento mb-12">
+      Đặt Phòng Khách Sạn
+    </h1>
+    <form id="bookingForm" class="flex flex-col gap-10" action="#" method="POST" novalidate>
+      <fieldset class="rounded-3xl p-8 bg-white">
+        <legend>Thông Tin Khách Sạn &amp; Đặt Phòng</legend>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+          <div>
+            <label for="hotelType" class="block text-pink-700 font-semibold mb-2">Loại Khách Sạn</label>
+            <select
+              id="hotelType"
+              name="hotelType"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            >
+              <option value="" disabled selected>Chọn loại khách sạn</option>
+              <option value="Giá Rẻ">Khách Sạn Giá Rẻ</option>
+              <option value="Tầm Trung">Khách Sạn Tầm Trung</option>
+              <option value="Hiện Đại">Khách Sạn Hiện Đại</option>
+              <option value="Sang Trọng">Khách Sạn Sang Trọng</option>
+            </select>
+          </div>
+          <div>
+            <label for="hotelName" class="block text-pink-700 font-semibold mb-2">Tên Khách Sạn</label>
+            <select
+              id="hotelName"
+              name="hotelName"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 bg-pink-50 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            >
+              <option value="" disabled selected>Chọn tên khách sạn</option>
+            </select>
+          </div>
+          <div>
+            <label for="roomType" class="block text-pink-700 font-semibold mb-2">Loại Phòng</label>
+            <select
+              id="roomType"
+              name="roomType"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            >
+              <option value="" disabled selected>Chọn loại phòng</option>
+              <option value="Đơn">Phòng Đơn</option>
+              <option value="Đôi">Phòng Đôi</option>
+              <option value="Suite">Phòng Suite</option>
+              <option value="Gia Đình">Phòng Gia Đình</option>
+            </select>
+          </div>
+          <div>
+            <label for="guests" class="block text-pink-700 font-semibold mb-2">Số Khách</label>
+            <select
+              id="guests"
+              name="guests"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            >
+              <option value="" disabled selected>Chọn số khách</option>
+              <option value="1">1 khách</option>
+              <option value="2">2 khách</option>
+              <option value="3">3 khách</option>
+              <option value="4">4 khách</option>
+              <option value="5">5 khách</option>
+              <option value="6">6 khách</option>
+            </select>
+          </div>
+          <div>
+            <label for="priceRange" class="block text-pink-700 font-semibold mb-2">Giá Dự Kiến (VNĐ)</label>
+            <input
+              type="text"
+              id="priceRange"
+              name="priceRange"
+              readonly
+              class="w-full rounded-lg border border-pink-300 bg-pink-50 px-4 py-3 text-pink-700 font-semibold cursor-not-allowed"
+              placeholder="Giá sẽ được tính toán tự động"
+            />
+          </div>
+          <div>
+            <label for="checkIn" class="block text-pink-700 font-semibold mb-2">Ngày Nhận Phòng</label>
+            <input
+              type="date"
+              id="checkIn"
+              name="checkIn"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            />
+          </div>
+          <div>
+            <label for="checkOut" class="block text-pink-700 font-semibold mb-2">Ngày Trả Phòng</label>
+            <input
+              type="date"
+              id="checkOut"
+              name="checkOut"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="rounded-3xl p-8 bg-white">
+        <legend>Thông Tin Khách Hàng</legend>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+          <div>
+            <label for="fullName" class="block text-pink-700 font-semibold mb-2">Họ và Tên</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Nhập họ và tên của bạn"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-pink-700 font-semibold mb-2">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Nhập email của bạn"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            />
+          </div>
+          <div>
+            <label for="phone" class="block text-pink-700 font-semibold mb-2">Số Điện Thoại</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Nhập số điện thoại của bạn"
+              class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              required
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <button
+        type="submit"
+        class="bg-pink-600 text-white font-semibold rounded-full py-4 px-8 shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-4 focus:ring-pink-300 transition self-center max-w-xs"
+      >
+        Xác Nhận Đặt Phòng
+      </button>
+    </form>
+
+    <div
+      id="messageBox"
+      class="fixed top-4 left-[calc(50%-3cm)] rounded-3xl px-10 py-4 shadow-2xl flex items-center gap-4 opacity-0 pointer-events-none select-none z-50"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <i class="fas fa-check-circle text-3xl drop-shadow-lg"></i>
+      <span class="text-xl font-extrabold tracking-wide drop-shadow-lg select-text" id="messageText">Đặt phòng thành công!</span>
+    </div>
+  </main>
+  <script>
+    const hotelsData = {
+      "Giá Rẻ": [
+        { name: "Khách Sạn Hoa Hồng", priceFactor: 0, allowedRooms: ["Đơn", "Đôi"] },
+        { name: "Khách Sạn Bình Minh", priceFactor: 0.05, allowedRooms: ["Đơn", "Đôi"] },
+        { name: "Khách Sạn Ánh Dương", priceFactor: 0.1, allowedRooms: ["Đơn", "Đôi"] },
+        { name: "Khách Sạn Mặt Trời Mọc", priceFactor: 0.15, allowedRooms: ["Đơn", "Đôi"] }
+      ],
+      "Tầm Trung": [
+        { name: "Khách Sạn Ngọc Lan", priceFactor: 0, allowedRooms: ["Đơn", "Đôi"] },
+        { name: "Khách Sạn Phương Đông", priceFactor: 0.07, allowedRooms: ["Đơn", "Đôi"] },
+        { name: "Khách Sạn Hạnh Phúc", priceFactor: 0.12, allowedRooms: ["Đơn", "Đôi"] },
+        { name: "Khách Sạn Bình An", priceFactor: 0.18, allowedRooms: ["Đơn", "Đôi"] }
+      ],
+      "Hiện Đại": [
+        { name: "Khách Sạn Mặt Trời", priceFactor: 0, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] },
+        { name: "Khách Sạn Thiên Đường", priceFactor: 0.06, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] },
+        { name: "Khách Sạn Ánh Sao", priceFactor: 0.11, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] },
+        { name: "Khách Sạn Vầng Trăng", priceFactor: 0.2, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] }
+      ],
+      "Sang Trọng": [
+        { name: "Khách Sạn Hoàng Gia", priceFactor: 0, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] },
+        { name: "Khách Sạn Kim Cương", priceFactor: 0.08, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] },
+        { name: "Khách Sạn Ngọc Trai", priceFactor: 0.13, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] },
+        { name: "Khách Sạn Thái Bình Dương", priceFactor: 0.22, allowedRooms: ["Đơn", "Đôi", "Suite", "Gia Đình"] }
+      ]
+    };
+
+    const hotelTypeSelect = document.getElementById("hotelType");
+    const hotelNameSelect = document.getElementById("hotelName");
+    const roomTypeSelect = document.getElementById("roomType");
+    const guestsSelect = document.getElementById("guests");
+    const priceRangeInput = document.getElementById("priceRange");
+    const bookingForm = document.getElementById("bookingForm");
+    const messageBox = document.getElementById("messageBox");
+    const messageText = document.getElementById("messageText");
+
+    let currentPriceFactor = 0;
+
+    // Cập nhật tên khách sạn theo loại khách sạn
+    hotelTypeSelect.addEventListener("change", () => {
+      const selectedType = hotelTypeSelect.value;
+      hotelNameSelect.innerHTML = '<option value="" disabled selected>Chọn tên khách sạn</option>';
+      currentPriceFactor = 0;
+      if (hotelsData[selectedType]) {
+        hotelsData[selectedType].forEach((hotel) => {
+          const option = document.createElement("option");
+          option.value = hotel.name;
+          option.textContent = hotel.name;
+          option.dataset.priceFactor = hotel.priceFactor;
+          option.dataset.allowedRooms = hotel.allowedRooms.join(",");
+          hotelNameSelect.appendChild(option);
+        });
+      }
+      updateRoomOptions();
+      updatePriceRange();
+    });
+
+    // Cập nhật hệ số giá khi chọn tên khách sạn
+    hotelNameSelect.addEventListener("change", () => {
+      const selectedOption = hotelNameSelect.options[hotelNameSelect.selectedIndex];
+      currentPriceFactor = parseFloat(selectedOption.dataset.priceFactor) || 0;
+      updateRoomOptions();
+      updatePriceRange();
+    });
+
+    // Cập nhật trạng thái các option loại phòng theo khách sạn đã chọn
+    function updateRoomOptions() {
+      const selectedOption = hotelNameSelect.options[hotelNameSelect.selectedIndex];
+      const allowedRooms = selectedOption ? selectedOption.dataset.allowedRooms.split(",") : [];
+
+      const options = roomTypeSelect.options;
+      for (let i = 0; i < options.length; i++) {
+        if (i === 0) continue; // placeholder
+        if (allowedRooms.length === 0) {
+          // Nếu chưa chọn khách sạn thì cho phép chọn tất cả
+          options[i].disabled = false;
+          options[i].classList.remove("disabled-option");
+        } else {
+          if (allowedRooms.includes(options[i].value)) {
+            options[i].disabled = false;
+            options[i].classList.remove("disabled-option");
+          } else {
+            options[i].disabled = true;
+            options[i].classList.add("disabled-option");
+          }
+        }
+      }
+      // Nếu loại phòng hiện tại bị disable thì reset về placeholder
+      if (roomTypeSelect.selectedIndex > 0 && roomTypeSelect.options[roomTypeSelect.selectedIndex].disabled) {
+        roomTypeSelect.selectedIndex = 0;
+      }
+    }
+
+    // Hàm tính giá chính trong khoảng dự kiến dựa trên loại khách sạn, loại phòng, số khách và chênh lệch khách sạn
+    function updatePriceRange() {
+      const type = hotelTypeSelect.value;
+      const room = roomTypeSelect.value;
+      const guests = parseInt(guestsSelect.value) || 1;
+
+      if (!type || !room || !guests) {
+        priceRangeInput.value = "";
+        return;
+      }
+
+      // Giá cơ bản theo loại khách sạn (VNĐ)
+      const basePrices = {
+        "Giá Rẻ": 300000,
+        "Tầm Trung": 800000,
+        "Hiện Đại": 1500000,
+        "Sang Trọng": 3500000
+      };
+
+      // Hệ số theo loại phòng
+      const roomMultipliers = {
+        "Đơn": 1,
+        "Đôi": 1.5,
+        "Suite": 2.5,
+        "Gia Đình": 2
+      };
+
+      // Hệ số theo số khách (giả sử mỗi khách thêm 0.5 lần giá cơ bản)
+      const guestMultiplier = 0.5;
+
+      const basePrice = basePrices[type] || 1000000;
+      const roomMultiplier = roomMultipliers[room] || 1;
+      const guestsMultiplier = 1 + (guests - 1) * guestMultiplier;
+
+      // Tính giá cơ bản
+      let calculatedPrice = basePrice * roomMultiplier * guestsMultiplier;
+
+      // Áp dụng chênh lệch giá theo khách sạn
+      calculatedPrice = calculatedPrice * (1 + currentPriceFactor);
+
+      // Tính giá chính giữa khoảng ±10%
+      const minPrice = Math.floor(calculatedPrice * 0.9 / 1000) * 1000;
+      const maxPrice = Math.ceil(calculatedPrice * 1.1 / 1000) * 1000;
+      const mainPrice = Math.round((minPrice + maxPrice) / 2);
+
+      // Hiển thị giá chính
+      priceRangeInput.value = `${mainPrice.toLocaleString('vi-VN')}₫`;
+    }
+
+    // Cập nhật giá khi thay đổi loại phòng hoặc số khách
+    roomTypeSelect.addEventListener("change", updatePriceRange);
+    guestsSelect.addEventListener("change", updatePriceRange);
+
+    // Xử lý submit form và hiển thị thông báo thành công hoặc thất bại ngẫu nhiên
+    bookingForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Kiểm tra form hợp lệ
+      if (!bookingForm.checkValidity()) {
+        bookingForm.reportValidity();
+        return;
+      }
+
+      // Ngẫu nhiên thành công hay thất bại (50% cơ hội)
+      const isSuccess = Math.random() < 0.5;
+
+      if (isSuccess) {
+        showMessage("Đặt phòng thành công!", true);
+      } else {
+        showMessage("Đặt phòng thất bại do khách sạn hết phòng!", false);
+      }
+
+      // Có thể thêm xử lý gửi dữ liệu ở đây
+    });
+
+    function showMessage(message, success) {
+      messageText.textContent = message;
+      if (success) {
+        messageBox.classList.remove("fail");
+        messageBox.classList.add("success");
+        messageBox.querySelector("i").className = "fas fa-check-circle text-3xl drop-shadow-lg";
+      } else {
+        messageBox.classList.remove("success");
+        messageBox.classList.add("fail");
+        messageBox.querySelector("i").className = "fas fa-times-circle text-3xl drop-shadow-lg";
+      }
+      messageBox.classList.add("show");
+
+      setTimeout(() => {
+        messageBox.classList.remove("show");
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
