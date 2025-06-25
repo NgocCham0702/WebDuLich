@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title>Danh Sách Khách Sạn - Khám Phá</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/dist/output.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Sacramento&amp;family=Poppins:wght@400;600;700&amp;display=swap"
         rel="stylesheet" />
@@ -71,157 +71,21 @@
         </a>
     </header>
     <main class="container mx-auto px-6 pt-28 pb-16 max-w-7xl flex-grow flex flex-col" role="main">
-        <h1 class="text-5xl font-extrabold text-pink-700 mb-16 text-center font-sacramento max-w-4xl mx-auto">
+        <h1
+            class="text-5xl bg-blue-500 font-extrabold text-pink-700 mb-16 text-center font-sacramento max-w-4xl mx-auto">
             Danh Sách Khách Sạn
         </h1>
         <section aria-label="Danh sách các khách sạn" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-            <article aria-label="Khách Sạn Giá Rẻ"
-                class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer flex flex-col group focus:outline-none focus:ring-4 focus:ring-rose-300 relative"
-                data-content='
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Giới thiệu&lt;/h3&gt;
-      &lt;p class="mb-4"&gt;Khách sạn giá rẻ cung cấp các phòng đơn giản, sạch sẽ với đầy đủ tiện nghi cơ bản như giường thoải mái, phòng tắm riêng và wifi miễn phí.&lt;/p&gt;
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Nội thất&lt;/h3&gt;
-      &lt;ul class="list-disc list-inside mb-4"&gt;
-       &lt;li&gt;Giường đơn hoặc đôi tiêu chuẩn&lt;/li&gt;
-       &lt;li&gt;Bàn làm việc nhỏ gọn&lt;/li&gt;
-       &lt;li&gt;Phòng tắm riêng với vòi sen&lt;/li&gt;
-       &lt;li&gt;Điều hòa nhiệt độ&lt;/li&gt;
-      &lt;/ul&gt;
-     ' data-description="Lựa chọn tiết kiệm với phòng sạch sẽ, tiện nghi cơ bản, phù hợp cho khách du lịch ngân sách hạn chế."
-                data-img="https://www.ahstatic.com/photos/7133_rokgb_00_p_1024x768.jpg" data-title="Khách Sạn Giá Rẻ"
-                role="button" tabindex="0" data-book-url="dat%20phong.html">
-                <img alt="Phòng khách sạn giá rẻ với giường đơn, nội thất đơn giản và sạch sẽ"
-                    class="w-full h-52 object-cover rounded-t-3xl" height="208"
-                    src="https://www.ahstatic.com/photos/7133_rokgb_00_p_1024x768.jpg" width="312" />
-                <div class="p-6 flex flex-col flex-grow">
-                    <h2 class="text-2xl font-semibold text-pink-700 mb-2 group-hover:text-rose-600 transition">
-                        Khách Sạn Giá Rẻ
-                    </h2>
-                    <p class="text-rose-600 flex-grow mb-4">
-                        Lựa chọn tiết kiệm với phòng sạch sẽ, tiện nghi cơ bản, phù hợp cho khách
-                        du lịch ngân sách hạn chế.
-                    </p>
+            <!-- *** THAY ĐỔI QUAN TRỌNG: SECTION TRỐNG *** -->
+            <section aria-label="Danh sách các khách sạn" id="hotel-list-container"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+                <!-- JavaScript sẽ render các card khách sạn vào đây -->
+                <!-- Có thể thêm một spinner/loader ở đây -->
+                <div class="col-span-full text-center text-pink-600">
+                    <i class="fas fa-spinner fa-spin text-4xl"></i>
+                    <p class="mt-2">Đang tải danh sách khách sạn...</p>
                 </div>
-                <div
-                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-3xl transition-opacity cursor-pointer pointer-events-none group-hover:pointer-events-auto">
-                    <span
-                        class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
-                        Xem Chi Tiết
-                    </span>
-                </div>
-            </article>
-            <article aria-label="Khách Sạn Tầm Trung"
-                class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer flex flex-col group focus:outline-none focus:ring-4 focus:ring-rose-300 relative"
-                data-content='
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Giới thiệu&lt;/h3&gt;
-      &lt;p class="mb-4"&gt;Khách sạn tầm trung cung cấp phòng rộng rãi với thiết kế hiện đại, trang bị đầy đủ tiện nghi như TV màn hình phẳng, minibar và bàn làm việc.&lt;/p&gt;
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Nội thất&lt;/h3&gt;
-      &lt;ul class="list-disc list-inside mb-4"&gt;
-       &lt;li&gt;Giường đôi hoặc hai giường đơn&lt;/li&gt;
-       &lt;li&gt;TV màn hình phẳng&lt;/li&gt;
-       &lt;li&gt;Minibar và tủ lạnh nhỏ&lt;/li&gt;
-       &lt;li&gt;Bàn làm việc và ghế&lt;/li&gt;
-       &lt;li&gt;Phòng tắm với bồn tắm hoặc vòi sen&lt;/li&gt;
-      &lt;/ul&gt;
-     ' data-description="Phòng rộng rãi hơn với nội thất hiện đại, tiện nghi đầy đủ, phù hợp cho gia đình và nhóm bạn."
-                data-img="https://bing.com/th/id/OIP.oCLnYyF2mfNlxbqhd-2wrQHaE8?cb=thvnextc2&amp;w=1440&amp;h=960&amp;rs=1&amp;pid=ImgDetMain"
-                data-title="Khách Sạn Tầm Trung" role="button" tabindex="0" data-book-url="dat%20phong.html">
-                <img alt="Phòng khách sạn tầm trung với giường đôi, nội thất hiện đại và tiện nghi đầy đủ"
-                    class="w-full h-52 object-cover rounded-t-3xl" height="208"
-                    src="https://bing.com/th/id/OIP.oCLnYyF2mfNlxbqhd-2wrQHaE8?cb=thvnextc2&amp;w=1440&amp;h=960&amp;rs=1&amp;pid=ImgDetMain"
-                    width="312" />
-                <div class="p-6 flex flex-col flex-grow">
-                    <h2 class="text-2xl font-semibold text-pink-700 mb-2 group-hover:text-rose-600 transition">
-                        Khách Sạn Tầm Trung
-                    </h2>
-                    <p class="text-rose-600 flex-grow mb-4">
-                        Phòng rộng rãi hơn với nội thất hiện đại, tiện nghi đầy đủ, phù hợp cho
-                        gia đình và nhóm bạn.
-                    </p>
-                </div>
-                <div
-                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-3xl transition-opacity cursor-pointer pointer-events-none group-hover:pointer-events-auto">
-                    <span
-                        class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
-                        Xem Chi Tiết
-                    </span>
-                </div>
-            </article>
-            <article aria-label="Khách Sạn Hiện Đại"
-                class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer flex flex-col group focus:outline-none focus:ring-4 focus:ring-rose-300 relative"
-                data-content='
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Giới thiệu&lt;/h3&gt;
-      &lt;p class="mb-4"&gt;Khách sạn hiện đại với thiết kế sang trọng, trang bị tiện nghi cao cấp như giường king-size, TV màn hình lớn, minibar và phòng tắm sang trọng.&lt;/p&gt;
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Nội thất&lt;/h3&gt;
-      &lt;ul class="list-disc list-inside mb-4"&gt;
-       &lt;li&gt;Giường king-size cao cấp&lt;/li&gt;
-       &lt;li&gt;TV màn hình lớn&lt;/li&gt;
-       &lt;li&gt;Minibar và két an toàn&lt;/li&gt;
-       &lt;li&gt;Phòng tắm với bồn tắm và vòi sen riêng biệt&lt;/li&gt;
-       &lt;li&gt;Bàn làm việc rộng rãi&lt;/li&gt;
-      &lt;/ul&gt;
-     ' data-description="Phong cách thiết kế sang trọng, tiện nghi cao cấp, phù hợp cho khách công tác và du lịch cao cấp."
-                data-img="https://storage.googleapis.com/a1aa/image/93dba42d-8123-459b-5ab1-cae6cf3c0f86.jpg"
-                data-title="Khách Sạn Hiện Đại" role="button" tabindex="0" data-book-url="dat%20phong.html">
-                <img alt="Phòng khách sạn hiện đại với giường king-size, nội thất sang trọng và tiện nghi cao cấp"
-                    class="w-full h-52 object-cover rounded-t-3xl" height="208"
-                    src="https://storage.googleapis.com/a1aa/image/93dba42d-8123-459b-5ab1-cae6cf3c0f86.jpg"
-                    width="312" />
-                <div class="p-6 flex flex-col flex-grow">
-                    <h2 class="text-2xl font-semibold text-pink-700 mb-2 group-hover:text-rose-600 transition">
-                        Khách Sạn Hiện Đại
-                    </h2>
-                    <p class="text-rose-600 flex-grow mb-4">
-                        Phong cách thiết kế sang trọng, tiện nghi cao cấp, phù hợp cho khách
-                        công tác và du lịch cao cấp.
-                    </p>
-                </div>
-                <div
-                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-3xl transition-opacity cursor-pointer pointer-events-none group-hover:pointer-events-auto">
-                    <span
-                        class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
-                        Xem Chi Tiết
-                    </span>
-                </div>
-            </article>
-            <article aria-label="Khách Sạn Sang Trọng"
-                class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition cursor-pointer flex flex-col group focus:outline-none focus:ring-4 focus:ring-rose-300 relative"
-                data-content='
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Giới thiệu&lt;/h3&gt;
-      &lt;p class="mb-4"&gt;Khách sạn sang trọng với dịch vụ đẳng cấp, phòng nghỉ cao cấp, nhà hàng sang trọng và các tiện ích như spa, hồ bơi và phòng gym hiện đại.&lt;/p&gt;
-      &lt;h3 class="text-xl font-semibold mb-2"&gt;Nội thất&lt;/h3&gt;
-      &lt;ul class="list-disc list-inside mb-4"&gt;
-       &lt;li&gt;Phòng suite cao cấp với giường king-size&lt;/li&gt;
-       &lt;li&gt;Nội thất sang trọng và tinh tế&lt;/li&gt;
-       &lt;li&gt;Spa và phòng xông hơi riêng&lt;/li&gt;
-       &lt;li&gt;Hồ bơi ngoài trời và phòng gym hiện đại&lt;/li&gt;
-       &lt;li&gt;Nhà hàng 5 sao và quầy bar sang trọng&lt;/li&gt;
-      &lt;/ul&gt;
-     ' data-description="Dịch vụ đẳng cấp, phòng nghỉ sang trọng và nhiều tiện ích cao cấp, phù hợp cho khách hàng thượng lưu và sự kiện đặc biệt."
-                data-img="https://www.dusit.com/dusitthani-pattaya/wp-content/uploads/sites/36/cache/2020/04/DTPA_Accommodation_Club-Grand-Room-1-1/1871968433.jpg"
-                data-title="Khách Sạn Sang Trọng" role="button" tabindex="0" data-book-url="dat%20phong.html">
-                <img alt="Phòng khách sạn sang trọng với giường king-size, nội thất cao cấp, spa, hồ bơi và nhà hàng 5 sao"
-                    class="w-full h-52 object-cover rounded-t-3xl" height="208"
-                    src="https://www.dusit.com/dusitthani-pattaya/wp-content/uploads/sites/36/cache/2020/04/DTPA_Accommodation_Club-Grand-Room-1-1/1871968433.jpg"
-                    width="312" />
-                <div class="p-6 flex flex-col flex-grow">
-                    <h2 class="text-2xl font-semibold text-pink-700 mb-2 group-hover:text-rose-600 transition">
-                        Khách Sạn Sang Trọng
-                    </h2>
-                    <p class="text-rose-600 flex-grow mb-4">
-                        Dịch vụ đẳng cấp, phòng nghỉ sang trọng và nhiều tiện ích cao cấp, phù hợp
-                        cho khách hàng thượng lưu và sự kiện đặc biệt.
-                    </p>
-                </div>
-                <div
-                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-3xl transition-opacity cursor-pointer pointer-events-none group-hover:pointer-events-auto">
-                    <span
-                        class="text-white text-lg font-semibold bg-pink-600 bg-opacity-80 px-4 py-2 rounded-lg shadow-lg select-none">
-                        Xem Chi Tiết
-                    </span>
-                </div>
-            </article>
-        </section>
+            </section>
     </main>
     <div aria-modal="true" aria-hidden="true"
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50" id="modal" role="dialog"
@@ -244,69 +108,9 @@
             </a>
         </div>
     </div>
-    <script>
-        const modal = document.getElementById("modal");
-        const modalContent = document.getElementById("modal-content");
-        const modalImage = document.getElementById("modal-image");
-        const modalTitle = document.getElementById("modal-title");
-        const modalDescription = document.getElementById("modal-description");
-        const modalHtmlContent = document.getElementById("modal-html-content");
-        const modalClose = document.getElementById("modal-close");
-        const modalBookBtn = document.getElementById("modal-book-btn");
-
-        function openModal(article) {
-            const imgSrc = article.getAttribute("data-img");
-            const title = article.getAttribute("data-title");
-            const description = article.getAttribute("data-description");
-            const content = article.getAttribute("data-content");
-            const bookUrl = article.getAttribute("data-book-url") || "#";
-
-            modalImage.src = imgSrc;
-            modalImage.alt = title + " - Hình ảnh chi tiết";
-            modalTitle.textContent = title;
-            modalDescription.textContent = description;
-            modalHtmlContent.innerHTML = content;
-
-            modalBookBtn.href = bookUrl;
-
-            modal.classList.add("show");
-            modal.setAttribute("aria-hidden", "false");
-            modalContent.focus();
-
-            // Remove any inline buttons inside content to avoid duplicate booking buttons
-            const inlineButtons = modalHtmlContent.querySelectorAll("button");
-            inlineButtons.forEach((btn) => btn.remove());
-        }
-
-        function closeModal() {
-            modal.classList.remove("show");
-            modal.setAttribute("aria-hidden", "true");
-        }
-
-        document.querySelectorAll("article[role='button']").forEach((article) => {
-            article.addEventListener("click", () => openModal(article));
-            article.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    openModal(article);
-                }
-            });
-        });
-
-        modalClose.addEventListener("click", closeModal);
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && modal.classList.contains("show")) {
-                closeModal();
-            }
-        });
-    </script>
+    </div>
+    <script type="module" src="/client/src/js/firebase-config.js"></script>
+    <script type="module" src="../js/hotel-list.js"></script>
 </body>
 
 </html>

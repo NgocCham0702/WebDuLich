@@ -1,0 +1,28 @@
+{
+  "name": "webdulich",
+  "version": "1.0.0",
+  "description": "Chuyên đề Thực tế 2",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build-css.js",
+    "dev": "nodemon -w tailwind.config.js -w ./client/src -e css,html,js --exec \"npm run build\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NgocCham0702/WebDuLich.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NgocCham0702/WebDuLich/issues"
+  },
+  "homepage": "https://github.com/NgocCham0702/WebDuLich#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "nodemon": "^3.1.0",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.3"
+  }
+}
