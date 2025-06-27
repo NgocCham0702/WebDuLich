@@ -586,9 +586,6 @@ video {
 .z-50 {
   z-index: 50;
 }
-.col-span-full {
-  grid-column: 1 / -1;
-}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -620,9 +617,6 @@ video {
 }
 .mt-10 {
   margin-top: 2.5rem;
-}
-.mt-2 {
-  margin-top: 0.5rem;
 }
 .mt-20 {
   margin-top: 5rem;

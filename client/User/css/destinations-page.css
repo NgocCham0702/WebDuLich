@@ -1,0 +1,523 @@
+/* ======================================================= */
+/*      HEADER MỚI (THEO MẪU ẢNH)                          */
+/* ======================================================= */
+
+.site-header {
+    background-color: #ffffff;
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    /* Giữ header cố định khi cuộn */
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Logo --- */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-image {
+    height: 45px;
+    width: auto;
+    margin-right: 12px;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #e6007e;
+    /* Màu hồng đậm */
+    font-family: 'Dancing Script', cursive;
+    /* Font chữ viết tay, cần import từ Google Fonts */
+}
+
+/* --- Các nút hành động --- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button:nth-child(1) {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+}
+
+.action-button:nth-child(2) {
+    background: linear-gradient(90deg, #9254c8, #3498db);
+}
+
+.action-button.auth-button {
+    background: #f0f2f5;
+    /* Màu nền xám cho nút đăng nhập/admin */
+    color: #333;
+    padding: 8px 16px;
+    /* Nút nhỏ hơn một chút */
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.action-button i {
+    font-size: 1.1rem;
+}
+
+/* Nút Admin sau khi đăng nhập */
+.admin-button {
+    color: #e6007e;
+    background-color: #fdf2f8;
+    border: 1px solid #fbcfe8;
+}
+
+.admin-button .logout-icon {
+    font-size: 0.9rem;
+    color: #555;
+    transition: transform 0.3s ease;
+}
+
+.admin-button:hover .logout-icon {
+    transform: translateX(3px);
+}
+
+
+/* Responsive cho Header */
+@media (max-width: 768px) {
+    .main-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .action-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ========================= */
+/*    CSS CHUNG TOÀN CỤC    */
+/* ========================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafafa;
+    color: #333;
+    margin: 0;
+}
+
+/* ========================= */
+/*    CẢI TIẾN CHO HEADER    */
+/* ========================= */
+
+/* Giải quyết header che tiêu đề */
+/* Giả sử header có chiều cao khoảng 70px, bạn điều chỉnh nếu khác */
+main.container {
+    padding-left: 20px;
+    /* Tạo khoảng cách trái */
+    padding-right: 20px;
+    /* Tạo khoảng cách phải để cân đối */
+    /* Giữ lại padding-top để tránh header che */
+    padding-top: 10px;
+    max-width: 1200px;
+    /* Giới hạn chiều rộng tối đa */
+    margin: 0 auto;
+    /* Căn giữa toàn bộ main trong viewport */
+    box-sizing: border-box;
+}
+
+
+/* ========================= */
+/*    LƯỚI ĐỊA DANH          */
+/* ========================= */
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 0 1rem 3rem 1rem;
+}
+
+/* ========================= */
+/*    CARD ĐỊA DANH V2       */
+/* ========================= */
+
+.destination-card-v2 {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(156, 137, 184, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+}
+
+.destination-card-v2:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 15px 35px rgba(156, 137, 184, 0.2);
+}
+
+/* Phần ảnh */
+.card-image-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.destination-card-v2:hover .card-image-wrapper img {
+    transform: scale(1.1);
+}
+
+/* Tag vị trí trên ảnh */
+.card-location-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(244, 162, 97, 0.9);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Phần nội dung text */
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #9c89b8;
+    margin-bottom: 10px;
+}
+
+.card-content .slogan {
+    font-size: 0.95rem;
+    color: #555;
+    flex-grow: 1;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Footer card */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+}
+
+.card-tags .tag {
+    background-color: #f0eef3;
+    color: #6f5d8f;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+}
+
+.card-link {
+    font-weight: 600;
+    color: #e76f51;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.card-link:hover {
+    color: #d81b60;
+}
+
+/* ========================= */
+/*    PLACEHOLDER LOADING    */
+/* ========================= */
+
+.loading-placeholder {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(156, 137, 184, 0.1);
+    overflow: hidden;
+}
+
+.placeholder-image {
+    height: 220px;
+    background-color: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.placeholder-content {
+    padding: 25px;
+}
+
+.placeholder-line-short {
+    height: 20px;
+    width: 60%;
+    background-color: #e0e0e0;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.placeholder-line-long {
+    height: 16px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ======================================================= */
+/*      CSS CHO POPUP CHI TIẾT ĐỊA DANH                    */
+/* ======================================================= */
+
+/* Lớp phủ và khung popup (tái sử dụng từ popup khách sạn để nhất quán) */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 30, 60, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+    padding: 20px;
+}
+
+.popup-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.popup-content {
+    background-color: #fdfdff;
+    color: #333;
+    padding: 30px;
+    /* Thêm padding cho nội dung */
+    border-radius: 20px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.popup-overlay:not(.hidden) .popup-content {
+    transform: translateY(0);
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f1f1;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #555;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 20;
+    transition: all 0.2s ease;
+}
+
+.popup-close-btn:hover {
+    background-color: #e0e0e0;
+    transform: rotate(90deg);
+}
+
+/* --- Nội dung bên trong popup chi tiết địa danh --- */
+#popup-body {
+    font-family: 'Poppins', sans-serif;
+}
+
+#popup-body h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #9c89b8;
+    /* Màu tím pastel */
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+#popup-body .popup-slogan {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    display: block;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+#popup-body h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #e76f51;
+    /* Màu cam pastel */
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+#popup-body p {
+    color: #495057;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+#popup-body ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+#popup-body ul li {
+    padding: 8px 0 8px 30px;
+    position: relative;
+    color: #495057;
+}
+
+/* Tạo dấu check hoặc dấu chấm tròn tùy thích */
+#popup-body ul li::before {
+    content: '\f00c';
+    /* Font Awesome check icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #f4a261;
+    /* Màu cam */
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+
+/* --- Gallery ảnh --- */
+.popup-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.popup-gallery img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.popup-gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* --- Nút đặt phòng --- */
+.btn-booking {
+    display: inline-block;
+    padding: 14px 35px;
+    background-color: #f4a261;
+    color: white;
+    border-radius: 30px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
+    font-size: 1.1rem;
+}
+
+.btn-booking:hover {
+    background-color: #e76f51;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 111, 81, 0.5);
+}
+
+.btn-booking-container {
+    /* Thêm class này vào div bao quanh nút nếu muốn căn giữa */
+    margin-top: 30px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+}
+
+/* --- Placeholder khi đang tải --- */
+.popup-loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+/* --- Sửa lại mã JS một chút để dùng các class CSS này --- */

@@ -1,204 +1,226 @@
-// =================================================================
-// BOOKING.JS - PHIÊN BẢN KẾT NỐI FIREBASE
-// =================================================================
+import { db } from './firebase-config.js';
+import { collection, getDocs, addDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// 1. IMPORT CÁC THÀNH PHẦN TỪ FIREBASE
-import { db } from '/client/src/js/firebase-config.js'; // Giả sử bạn có file này
-import { collection, getDocs, query, where, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// DOM Elements
+const bookingForm = document.getElementById('bookingForm');
+const hotelTypeSelect = document.getElementById('hotelType');
+const hotelNameSelect = document.getElementById('hotelName');
+const roomTypeSelect = document.getElementById('roomType');
+const guestsSelect = document.getElementById('guests');
+const priceRangeInput = document.getElementById('priceRange');
+const checkInInput = document.getElementById('checkIn');
+const checkOutInput = document.getElementById('checkOut');
+const messageBox = document.getElementById('messageBox');
+const messageText = document.getElementById('messageText');
 
-// --- Lấy các element từ DOM (giữ nguyên) ---
-const hotelTypeSelect = document.getElementById("hotelType");
-const hotelNameSelect = document.getElementById("hotelName");
-const roomTypeSelect = document.getElementById("roomType");
-const guestsSelect = document.getElementById("guests");
-const priceRangeInput = document.getElementById("priceRange");
-const checkInInput = document.getElementById("checkIn");
-const checkOutInput = document.getElementById("checkOut");
-const fullNameInput = document.getElementById("fullName");
-const emailInput = document.getElementById("email");
-const phoneInput = document.getElementById("phone");
-const bookingForm = document.getElementById("bookingForm");
-const messageBox = document.getElementById("messageBox");
-const messageText = document.getElementById("messageText");
-
-// Biến toàn cục để lưu trữ dữ liệu tải về, thay thế cho hotelsData
+// Data cache
+let hotelTypesData = [];
 let allHotelsData = [];
-let allHotelTypesData = [];
+function showMessage(message, isSuccess) {
+    messageText.textContent = message;
+    // Reset class và thêm các class cơ bản
+    messageBox.className = 'fixed top-4 left-1/2 -translate-x-1/2 rounded-3xl px-10 py-4 shadow-2xl flex items-center gap-4 opacity-0 pointer-events-none select-none z-50 transition-all duration-300';
 
-// =================================================================
-// 2. TẢI DỮ LIỆU ĐỘNG TỪ FIRESTORE KHI TRANG ĐƯỢC TẢI
-// =================================================================
+    // Thay đổi màu chữ và nền theo isSuccess
+    if (isSuccess) {
+        // Nền trắng, chữ màu đỏ (đỏ đậm)
+        messageBox.style.backgroundColor = '#ffffff'; // nền trắng
+        messageBox.style.color = '#dc2626'; // màu đỏ (Tailwind red-600)
+        messageBox.querySelector('i').className = "fas fa-check-circle text-3xl";
+        messageBox.querySelector('i').style.color = '#dc2626'; // icon màu đỏ
+    } else {
+        // Nền trắng, chữ màu đỏ (đỏ đậm)
+        messageBox.style.backgroundColor = '#ffffff'; // nền trắng
+        messageBox.style.color = '#dc2626'; // màu đỏ
+        messageBox.querySelector('i').className = "fas fa-times-circle text-3xl";
+        messageBox.querySelector('i').style.color = '#dc2626'; // icon màu đỏ
+    }
 
-async function initialLoad() {
+    messageBox.classList.add('show', 'opacity-100', 'top-8');
+
+    setTimeout(() => {
+        messageBox.classList.remove('show', 'opacity-100', 'top-8');
+        // Reset style sau khi ẩn
+        messageBox.style.backgroundColor = '';
+        messageBox.style.color = '';
+        messageBox.querySelector('i').style.color = '';
+    }, 4000);
+}
+
+
+// Load hotel types and hotels
+async function initializeBookingForm() {
     try {
-        // Tải danh sách các loại khách sạn
-        const hotelTypesSnapshot = await getDocs(collection(db, "hotel_types"));
-        allHotelTypesData = hotelTypesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const [typeSnap, hotelSnap] = await Promise.all([
+            getDocs(query(collection(db, "hotel_types"), where("isActive", "==", true))),
+            getDocs(query(collection(db, "hotels"), where("isActive", "==", true)))
+        ]);
 
-        // Tải toàn bộ danh sách khách sạn
-        const hotelsSnapshot = await getDocs(collection(db, "hotels"));
-        allHotelsData = hotelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        hotelTypesData = typeSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        hotelTypesData.forEach(type => {
+            hotelTypeSelect.add(new Option(type.name, type.id));
+        });
 
-        // Điền vào dropdown Loại Khách Sạn
-        populateHotelTypes();
-
+        allHotelsData = hotelSnap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
     } catch (error) {
-        console.error("Lỗi khi tải dữ liệu ban đầu: ", error);
-        alert("Không thể tải dữ liệu từ server. Vui lòng thử lại sau.");
+        console.error("Lỗi khi tải dữ liệu cho form đặt phòng:", error);
+        showMessage("Không thể tải dữ liệu. Vui lòng thử lại sau.", false);
     }
 }
 
-function populateHotelTypes() {
-    hotelTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại khách sạn</option>';
-    allHotelTypesData
-        .sort((a, b) => a.order - b.order) // Sắp xếp theo thứ tự (nếu có)
-        .forEach(type => {
-            const option = document.createElement("option");
-            option.value = type.id; // Dùng ID làm giá trị
-            option.textContent = type.name; // Tên để hiển thị
-            hotelTypeSelect.appendChild(option);
+// Update hotel names based on selected hotel type
+function updateHotelNameOptions() {
+    const selectedTypeId = hotelTypeSelect.value;
+    hotelNameSelect.innerHTML = '<option value="" disabled selected>Chọn tên khách sạn</option>';
+    //roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+    priceRangeInput.value = '';
+
+    if (selectedTypeId) {
+        const filteredHotels = allHotelsData.filter(hotel => hotel.data.hotel_type_id === selectedTypeId);
+        filteredHotels.forEach(hotel => {
+            hotelNameSelect.add(new Option(hotel.data.name, hotel.id));
         });
+    }
 }
 
-// =================================================================
-// 3. CẬP NHẬT LẠI CÁC EVENT LISTENER
-// =================================================================
-
-// Khi người dùng chọn một LOẠI khách sạn
-hotelTypeSelect.addEventListener("change", () => {
-    const selectedTypeId = hotelTypeSelect.value;
-
-    // Lọc ra các khách sạn thuộc loại đã chọn
-    const filteredHotels = allHotelsData.filter(hotel => hotel.hotel_type_id === selectedTypeId);
-
-    // Điền vào dropdown Tên Khách Sạn
-    hotelNameSelect.innerHTML = '<option value="" disabled selected>Chọn tên khách sạn</option>';
-    filteredHotels.forEach(hotel => {
-        const option = document.createElement("option");
-        option.value = hotel.id; // Dùng ID của khách sạn làm giá trị
-        option.textContent = hotel.name;
-        hotelNameSelect.appendChild(option);
-    });
-
-    // Reset các dropdown phụ thuộc
-    updateRoomOptions();
-    updatePrice();
-});
-
-// Khi người dùng chọn một TÊN khách sạn
-hotelNameSelect.addEventListener("change", () => {
-    updateRoomOptions();
-    updatePrice();
-});
-
+// Update room types based on selected hotel
 function updateRoomOptions() {
     const selectedHotelId = hotelNameSelect.value;
-    const selectedHotel = allHotelsData.find(hotel => hotel.id === selectedHotelId);
+    // roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+    priceRangeInput.value = '';
 
-    // Lấy các phòng có sẵn từ CSDL của khách sạn đó
-    const availableRooms = selectedHotel ? selectedHotel.availableRooms.map(room => room.roomTypeName) : [];
-
-    // Cập nhật dropdown loại phòng
-    const options = roomTypeSelect.options;
-    for (let i = 1; i < options.length; i++) { // Bỏ qua placeholder
-        const roomOption = options[i];
-        if (availableRooms.includes(roomOption.value)) {
-            roomOption.disabled = false;
-        } else {
-            roomOption.disabled = true;
+    if (selectedHotelId) {
+        const selectedHotel = allHotelsData.find(hotel => hotel.id === selectedHotelId);
+        if (selectedHotel && selectedHotel.data.availableRooms) {
+            selectedHotel.data.availableRooms.forEach(room => {
+                const option = new Option(`${room.roomTypeName} (tối đa ${room.maxGuests} khách)`, room.roomTypeName);
+                option.dataset.price = room.basePrice;
+                option.dataset.maxGuests = room.maxGuests;
+                roomTypeSelect.add(option);
+            });
         }
     }
-    if (roomTypeSelect.options[roomTypeSelect.selectedIndex]?.disabled) {
-        roomTypeSelect.selectedIndex = 0;
-    }
 }
 
+// Calculate and update price
 function updatePrice() {
-    const selectedHotelId = hotelNameSelect.value;
-    const selectedRoomType = roomTypeSelect.value;
+    const selectedRoomOption = roomTypeSelect.options[roomTypeSelect.selectedIndex];
+    const checkInDate = new Date(checkInInput.value);
+    const checkOutDate = new Date(checkOutInput.value);
 
-    if (!selectedHotelId || !selectedRoomType) {
-        priceRangeInput.value = "";
+    if (!selectedRoomOption?.dataset.price || !checkInInput.value || !checkOutInput.value || checkOutDate <= checkInDate) {
+        priceRangeInput.value = '';
         return;
     }
 
-    const selectedHotel = allHotelsData.find(hotel => hotel.id === selectedHotelId);
-    const selectedRoom = selectedHotel.availableRooms.find(room => room.roomTypeName === selectedRoomType);
+    const basePrice = parseFloat(selectedRoomOption.dataset.price);
+    const numberOfNights = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+    const totalPrice = basePrice * numberOfNights;
 
-    const basePrice = selectedRoom ? selectedRoom.basePrice : 0;
-    // Bạn có thể thêm logic tính giá phức tạp hơn ở đây (dựa vào số đêm, số khách...)
-
-    priceRangeInput.value = basePrice > 0 ? `${basePrice.toLocaleString('vi-VN')}₫ / đêm` : "Vui lòng liên hệ";
+    priceRangeInput.value = `${totalPrice.toLocaleString('vi-VN')} ₫`;
 }
 
-// Cập nhật giá khi thay đổi loại phòng hoặc số khách
-roomTypeSelect.addEventListener("change", updatePrice);
-guestsSelect.addEventListener("change", updatePrice);
+// Get hotelId from URL
+function getHotelIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('hotelId');
+}
 
+// Select hotel and related options by hotelId
+async function selectHotelById(hotelId) {
+    if (!hotelId) return;
 
-// =================================================================
-// 4. CẬP NHẬT HÀM SUBMIT FORM
-// =================================================================
+    if (hotelTypesData.length === 0 || allHotelsData.length === 0) {
+        await initializeBookingForm();
+    }
 
-bookingForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (!bookingForm.checkValidity()) {
-        bookingForm.reportValidity();
+    const hotel = allHotelsData.find(h => h.id === hotelId);
+    if (!hotel) {
+        console.warn("Không tìm thấy khách sạn với ID:", hotelId);
         return;
     }
 
-    // Vô hiệu hóa nút submit để tránh double-click
+    hotelTypeSelect.value = hotel.data.hotel_type_id;
+    updateHotelNameOptions();
+
+    hotelNameSelect.value = hotelId;
+    updateRoomOptions();
+
+    if (roomTypeSelect.options.length > 1) {
+        roomTypeSelect.selectedIndex = 1;
+        updatePrice();
+    }
+}
+
+// Event listeners
+hotelTypeSelect.addEventListener('change', () => {
+    updateHotelNameOptions();
+    // roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+    priceRangeInput.value = '';
+});
+hotelNameSelect.addEventListener('change', () => {
+    updateRoomOptions();
+    priceRangeInput.value = '';
+});
+roomTypeSelect.addEventListener('change', updatePrice);
+checkInInput.addEventListener('change', updatePrice);
+checkOutInput.addEventListener('change', updatePrice);
+
+// Form submit
+bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!bookingForm.checkValidity()) {
+        showMessage("Vui lòng điền đầy đủ thông tin.", false);
+        return;
+    }
+
     const submitButton = bookingForm.querySelector('button[type="submit"]');
     submitButton.disabled = true;
-    submitButton.textContent = "Đang xử lý...";
+    submitButton.textContent = 'Đang xử lý...';
 
-    // Thu thập dữ liệu từ form để lưu vào Firestore
+    const checkInDate = new Date(checkInInput.value);
+    const checkOutDate = new Date(checkOutInput.value);
+    const totalPrice = parseFloat(priceRangeInput.value.replace(/[^0-9]/g, '')) || 0;
+
+    const bookingData = {
+        customerName: document.getElementById('fullName').value,
+        customerEmail: document.getElementById('email').value,
+        customerPhone: document.getElementById('phone').value,
+        hotelId: hotelNameSelect.value,
+        hotelName: hotelNameSelect.options[hotelNameSelect.selectedIndex]?.text || '',
+        hotelTypeId: hotelTypeSelect.value,
+        hotelType: hotelTypeSelect.options[hotelTypeSelect.selectedIndex]?.text || '',
+        roomType: roomTypeSelect.value,
+        guests: Number(guestsSelect.value),
+        checkinDate: checkInDate,
+        checkoutDate: checkOutDate,
+        totalPrice: totalPrice,
+        status: 'pending',
+        createdAt: serverTimestamp()
+    };
+
     try {
-        // Lấy text của các lựa chọn, không phải ID
-        const selectedHotelTypeName = hotelTypeSelect.options[hotelTypeSelect.selectedIndex].text;
-        const selectedHotelName = hotelNameSelect.options[hotelNameSelect.selectedIndex].text;
-
-        const bookingData = {
-            customerName: fullNameInput.value,
-            customerEmail: emailInput.value,
-            customerPhone: phoneInput.value,
-            hotelType: selectedHotelTypeName,
-            hotelName: selectedHotelName,
-            roomType: roomTypeSelect.value,
-            guests: parseInt(guestsSelect.value),
-            checkinDate: new Date(checkInInput.value),
-            checkoutDate: new Date(checkOutInput.value),
-            totalPrice: parseFloat(priceRangeInput.value.replace(/[^0-9]/g, '')) || 0, // Tính toán lại giá cuối cùng ở đây
-            status: "pending", // Trạng thái mặc định
-            createdAt: serverTimestamp()
-        };
-
-        // Thêm document mới vào collection 'bookings'
-        const docRef = await addDoc(collection(db, "bookings"), bookingData);
-        console.log("Document written with ID: ", docRef.id);
-
+        await addDoc(collection(db, 'bookings'), bookingData);
         showMessage("Đặt phòng thành công! Chúng tôi sẽ liên hệ với bạn sớm.", true);
-        bookingForm.reset(); // Xóa form sau khi thành công
-
+        bookingForm.reset();
+        hotelNameSelect.innerHTML = '<option value="" disabled selected>Chọn tên khách sạn</option>';
+        roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+        priceRangeInput.value = '';
     } catch (error) {
         console.error("Lỗi khi thêm booking: ", error);
-        showMessage("Đã xảy ra lỗi. Vui lòng thử lại.", false);
+        showMessage("Đã có lỗi xảy ra. Vui lòng thử lại.", false);
     } finally {
-        // Bật lại nút submit
         submitButton.disabled = false;
-        submitButton.textContent = "Xác Nhận Đặt Phòng";
+        submitButton.textContent = 'Xác Nhận Đặt Phòng';
     }
 });
 
-// Hàm showMessage giữ nguyên
-function showMessage(message, success) {
-    messageText.textContent = message;
-    messageBox.className = `fixed top-4 left-1/2 -translate-x-1/2 rounded-3xl px-10 py-4 shadow-2xl flex items-center gap-4 z-50 transition-all duration-500 transform ${success ? 'bg-green-500 text-white' : 'bg-red-500 text-white'} opacity-100 scale-100`;
-    setTimeout(() => {
-        messageBox.className = messageBox.className.replace('opacity-100 scale-100', 'opacity-0 scale-90');
-    }, 3500);
-}
-
-
-// --- KHỞI CHẠY HÀM TẢI DỮ LIỆU ---
-initialLoad();
+// Initialize form and select hotel if hotelId in URL
+document.addEventListener('DOMContentLoaded', async () => {
+    await initializeBookingForm();
+    const hotelId = getHotelIdFromUrl();
+    if (hotelId) {
+        await selectHotelById(hotelId);
+    }
+});

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // TRANG DANH SÁCH - PHIÊN BẢN ĐÃ CÓ NÚT HÀNH ĐỘNG
 async function initBookingsListPage() {
     const tableBody = document.getElementById('bookings-table-body');
-    
+
     const loadBookings = async () => {
         tableBody.innerHTML = `<tr><td colspan="6">Đang tải...</td></tr>`;
         try {
@@ -75,7 +75,7 @@ async function initBookingsListPage() {
         if (deleteButton) {
             const bookingId = deleteButton.dataset.id;
             const customerName = deleteButton.dataset.name || "khách hàng này";
-            
+
             if (confirm(`Bạn có chắc chắn muốn xóa đơn đặt phòng của ${customerName}?`)) {
                 try {
                     await deleteDoc(doc(db, 'bookings', bookingId));
@@ -88,7 +88,7 @@ async function initBookingsListPage() {
             }
         }
     });
-    
+
     // Tải danh sách lần đầu
     loadBookings();
 }
@@ -112,13 +112,13 @@ function initBookingFormPage() {
             });
         }
     });
-    
+
     // --- Logic chính của form ---
     const form = document.getElementById('booking-form');
     const urlParams = new URLSearchParams(window.location.search);
     const bookingId = urlParams.get('id');
     const isEditMode = !!bookingId;
-    
+
     // Helper chuyển Timestamp sang YYYY-MM-DD cho input[type=date]
     const toInputDate = (timestamp) => {
         if (!timestamp) return '';
@@ -128,7 +128,7 @@ function initBookingFormPage() {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
-    
+
     if (isEditMode) {
         document.getElementById('form-title').textContent = "Chỉnh Sửa Đơn Đặt Phòng";
         getDoc(doc(db, 'bookings', bookingId)).then(docSnap => {
@@ -139,9 +139,9 @@ function initBookingFormPage() {
                 form.customerPhone.value = data.customerPhone;
                 form.hotelType.value = data.hotelType;
                 // Trigger event để load đúng danh sách khách sạn
-                hotelTypeSelect.dispatchEvent(new Event('change')); 
+                hotelTypeSelect.dispatchEvent(new Event('change'));
                 // Set giá trị hotelName sau khi đã load xong
-                setTimeout(() => { form.hotelName.value = data.hotelName; }, 100); 
+                setTimeout(() => { form.hotelName.value = data.hotelName; }, 100);
                 form.roomType.value = data.roomType;
                 form.guests.value = data.guests;
                 form.checkinDate.value = toInputDate(data.checkinDate);
@@ -157,7 +157,7 @@ function initBookingFormPage() {
         const submitBtn = document.getElementById('submit-btn');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu...';
-        
+
         const dataToSave = {
             customerName: form.customerName.value,
             customerEmail: form.customerEmail.value,

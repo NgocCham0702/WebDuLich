@@ -6,7 +6,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -104,12 +106,13 @@ table {
     border-collapse: collapse;
     margin-top: 25px;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
     overflow: hidden;
 }
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
@@ -133,11 +136,18 @@ tbody tr:hover {
     color: white;
     text-transform: uppercase;
 }
-.status-active { background-color: #28a745; }
-.status-inactive { background-color: #6c757d; }
+
+.status-active {
+    background-color: #28a745;
+}
+
+.status-inactive {
+    background-color: #6c757d;
+}
 
 /* --- BUTTONS (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
-.btn, button {
+.btn,
+button {
     padding: 10px 18px;
     border: none;
     border-radius: 5px;
@@ -149,17 +159,33 @@ tbody tr:hover {
     display: inline-block;
 }
 
-button#btnAddHotel { /* Đổi id cho nút thêm khách sạn */
+button#btnAddHotel {
+    /* Đổi id cho nút thêm khách sạn */
     background-color: #007bff;
     color: white;
 }
-button#btnAddHotel:hover { background-color: #0056b3; }
 
-.actions .btn-edit { background-color: #ffc107; color: #212529; }
-.actions .btn-edit:hover { background-color: #e0a800; }
+button#btnAddHotel:hover {
+    background-color: #0056b3;
+}
 
-.actions .btn-delete { background-color: #dc3545; color: white; }
-.actions .btn-delete:hover { background-color: #c82333; }
+.actions .btn-edit {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.actions .btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.actions .btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.actions .btn-delete:hover {
+    background-color: #c82333;
+}
 
 .actions button {
     margin-right: 8px;
@@ -185,7 +211,8 @@ button#btnAddHotel:hover { background-color: #0056b3; }
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     width: 90%;
-    max-width: 900px; /* Form khách sạn cũng có thể cần rộng */
+    max-width: 900px;
+    /* Form khách sạn cũng có thể cần rộng */
     position: relative;
 }
 
@@ -198,13 +225,18 @@ button#btnAddHotel:hover { background-color: #0056b3; }
     font-weight: bold;
     cursor: pointer;
 }
-.close:hover, .close:focus { color: #333; }
+
+.close:hover,
+.close:focus {
+    color: #333;
+}
 
 /* --- FORM STYLES (GIỐNG HỆT TRANG ĐỊA ĐIỂM) --- */
 form label {
     display: block;
     margin-bottom: 5px;
-    margin-top: 10px; /* Thêm khoảng cách phía trên label */
+    margin-top: 10px;
+    /* Thêm khoảng cách phía trên label */
     font-weight: 500;
     color: #495057;
 }
@@ -270,7 +302,8 @@ form legend {
     border-radius: 4px;
 }
 
-.room-group { /* Sửa tên class để khớp với JS */
+.room-group {
+    /* Sửa tên class để khớp với JS */
     background: #fff;
     border: 1px solid #e0e0e0;
     margin-bottom: 10px;
@@ -288,8 +321,10 @@ form legend {
     padding: 10px !important;
 }
 
-.room-group .btn-remove-room { /* Sửa tên class để khớp với JS */
-    grid-column: 1 / -1; /* Nút xóa chiếm toàn bộ chiều rộng hàng cuối */
+.room-group .btn-remove-room {
+    /* Sửa tên class để khớp với JS */
+    grid-column: 1 / -1;
+    /* Nút xóa chiếm toàn bộ chiều rộng hàng cuối */
     margin-top: 10px;
     background-color: #dc3545;
     color: white;
@@ -302,6 +337,7 @@ form legend {
     color: white;
     margin-top: 10px;
 }
+
 #btnAddRoom:hover {
     background-color: #117a8b;
 }
@@ -311,15 +347,96 @@ form legend {
     .dashboard-container {
         flex-direction: column;
     }
+
     .sidebar {
         width: 100%;
         height: auto;
         position: static;
     }
+
     .container {
         padding: 20px;
     }
+
     .modal-content {
         margin: 10% auto;
     }
+}
+
+/* --- Style cho Modal Xem Chi Tiết (Tái sử dụng style của Form) --- */
+
+/* Style cơ bản cho các trường chỉ xem để trông giống input */
+.view-field,
+.view-field-inline {
+    width: 100%;
+    padding: 8px 10px;
+    /* Giống padding của input */
+    margin-bottom: 15px;
+    /* Giống margin của input */
+    background-color: #f4f4f4;
+    /* Màu nền giống input disabled */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 38px;
+    /* Chiều cao tối thiểu bằng input */
+    word-wrap: break-word;
+    /* Tự động xuống dòng nếu text dài */
+}
+
+/* Style cho các trường nằm trên cùng một hàng trong fieldset */
+.view-field-inline {
+    display: inline-block;
+    width: auto;
+    /* Chiều rộng tự động */
+    margin-right: 20px;
+}
+
+/* Style cho các trường textarea giả */
+.view-field.pre-wrap {
+    white-space: pre-wrap;
+    min-height: 60px;
+    /* Chiều cao giống textarea */
+}
+
+/* Style cho danh sách */
+.view-field.list {
+    list-style-position: inside;
+    padding-left: 10px;
+}
+
+.view-field.list li {
+    margin-bottom: 4px;
+}
+
+/* Style cho thư viện ảnh */
+.view-field.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: transparent;
+    /* Bỏ nền xám cho gallery */
+    border: none;
+    padding: 0;
+}
+
+.view-field.image-gallery img {
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Style cho các phòng */
+#roomsContainer_view .room-item-view {
+    background-color: #e9e9e9;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border-left: 3px solid #666;
+}
+
+/* Tùy chỉnh nhỏ để các label trong fieldset không bị dính vào nhau */
+fieldset label {
+    margin-right: 10px;
 }

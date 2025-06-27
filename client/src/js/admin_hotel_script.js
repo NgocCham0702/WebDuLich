@@ -5,7 +5,7 @@
 // STEP 1: IMPORT CÁC MODULE CẦN THIẾT
 // -------------------------------------------------------------------
 // Đảm bảo đường dẫn đến file config của bạn là chính xác
-import { db } from "./firebase-config.js"; 
+import { db } from "./firebase-config.js";
 import {
     collection,
     getDocs,
@@ -59,14 +59,14 @@ const generateSlug = (str) => {
 
     // remove accents, swap ñ for n, etc
     const from = "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ·/_,:;";
-    const to   = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
+    const to = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
     for (let i = 0, l = from.length; i < l; i++) {
         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
 
     str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-             .replace(/\s+/g, '-') // collapse whitespace and replace by -
-             .replace(/-+/g, '-'); // collapse dashes
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
 
     return str;
 };
@@ -86,8 +86,8 @@ const renderHotels = async () => {
     let rowsHtml = '';
     try {
         const querySnapshot = await getDocs(collection(db, "hotels")); // Lấy collection 'hotels'
-        
-        if(querySnapshot.empty) {
+
+        if (querySnapshot.empty) {
             hotelTableBody.innerHTML = '<tr><td colspan="7">Chưa có khách sạn nào.</td></tr>';
             return;
         }
@@ -96,12 +96,12 @@ const renderHotels = async () => {
             const hotel = doc.data();
             const statusClass = hotel.isActive ? 'status-active' : 'status-inactive';
             const statusText = hotel.isActive ? 'Hoạt động' : 'Đã ẩn';
-            
+
             rowsHtml += `
                 <tr data-id="${doc.id}">
                     <td>${hotel.name}</td>
                     <td>${hotel.address}</td>
-                    <td>${hotel.hotel_type_id || 'Chưa rõ'}</td>
+                    <td>${hotel.hotel_type_id}</td>
                     <td>${hotel.rating} ⭐</td>
                     <td>${hotel.reviewCount}</td>
                     <td><span class="status-badge ${statusClass}">${statusText}</span></td>
@@ -120,24 +120,57 @@ const renderHotels = async () => {
 };
 
 // --- Hàm thêm một bộ trường nhập liệu cho phòng ---
-const addRoomField = (room = {}) => {
+// Hàm này cần được sửa lại để nhận dữ liệu
+function addRoomField(room = {}) {
+    const roomsContainer = document.getElementById('roomsContainer');
+    if (!roomsContainer) return;
+
+    // Tạo div chứa các input cho phòng
     const roomDiv = document.createElement('div');
-    roomDiv.classList.add('room-group');
+    roomDiv.classList.add('room-item');
+    roomDiv.style.border = "1px solid #ccc";
+    roomDiv.style.padding = "10px";
+    roomDiv.style.marginBottom = "10px";
+    roomDiv.style.position = "relative";
+
     roomDiv.innerHTML = `
-        <input type="text" class="room-name" placeholder="Tên loại phòng (vd: Deluxe)" value="${room.name || ''}" required>
-        <input type="number" class="room-price" placeholder="Giá (VND)" value="${room.price || ''}" required>
-        <input type="number" class="room-capacity" placeholder="Sức chứa (người)" value="${room.capacity || ''}" required>
-        <button type="button" class="btn-remove-room">Xóa phòng</button>
+        <label>Loại phòng:</label>
+        <input type="text" name="roomType[]" value="${room.roomType || ''}" required />
+
+        <label>Số lượng:</label>
+        <input type="number" name="roomQuantity[]" min="1" value="${room.quantity || 1}" required />
+
+        <label>Giá (VNĐ):</label>
+        <input type="number" name="roomPrice[]" min="0" value="${room.price || 0}" required />
+
+        <button type="button" class="btnRemoveRoom" style="position:absolute; top:5px; right:5px;">Xóa</button>
     `;
+
     roomsContainer.appendChild(roomDiv);
 
-    // Thêm sự kiện xóa cho phòng vừa tạo
-    roomDiv.querySelector('.btn-remove-room').addEventListener('click', () => {
-        roomDiv.remove();
+    // Thêm sự kiện xóa phòng
+    const btnRemove = roomDiv.querySelector('.btnRemoveRoom');
+    btnRemove.addEventListener('click', () => {
+        roomsContainer.removeChild(roomDiv);
     });
-};
+}
+
+
 
 // --- Hàm mở Modal để sửa khách sạn ---
+/**
+ * Mở modal để sửa thông tin khách sạn và đổ dữ liệu đã có vào form.
+ * @param {string} id - ID của document khách sạn trong Firestore.
+ *//**
+* Mở modal để sửa thông tin khách sạn và đổ dữ liệu đã có vào form.
+* Hàm này xử lý các trường đơn, trường tham chiếu, mảng và các object lồng nhau.
+* @param {string} id - ID của document khách sạn trong Firestore.
+*//**
+ * Mở modal để sửa thông tin khách sạn và tự động điền TẤT CẢ các trường trong form.
+ * Hàm này quét các input và tìm dữ liệu tương ứng, bao gồm cả các trường lồng nhau.
+ * @param {string} id - ID của document khách sạn trong Firestore.
+ */
+
 const openEditModal = async (id) => {
     resetForm();
     currentEditId = id;
@@ -147,40 +180,102 @@ const openEditModal = async (id) => {
         const docRef = doc(db, "hotels", id);
         const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            hotelIdInput.value = id;
-            
-            // Đổ dữ liệu vào các trường input
-            for (const key in data) {
-                const input = document.getElementById(key);
-                if (input) {
-                    // Xử lý các trường hợp đặc biệt
-                    if (key === 'amenities' || key === 'imageUrls') {
-                        input.value = Array.isArray(data[key]) ? data[key].join(', ') : '';
-                    } else if (input.type === 'select-one') {
-                         input.value = data[key].toString();
-                    } else {
-                        input.value = data[key];
-                    }
-                }
-            }
-            
-            // Đổ dữ liệu phòng
-            if (data.rooms && Array.isArray(data.rooms)) {
-                data.rooms.forEach(room => addRoomField(room));
-            }
-
-            toggleModal(true);
-        } else {
-            console.log("Không tìm thấy khách sạn!");
-            alert("Lỗi: Không tìm thấy khách sạn để sửa.");
+        if (!docSnap.exists()) {
+            alert("Không tìm thấy khách sạn để sửa.");
+            return;
         }
+
+        const data = docSnap.data();
+
+        // Các trường cơ bản
+        document.getElementById('name').value = data.name || '';
+        document.getElementById('slug').value = data.slug || '';
+        document.getElementById('address').value = data.address || '';
+
+        // Dropdown địa điểm
+        if (data.destination_id) {
+            const destSelect = document.getElementById('destination_id');
+            if (destSelect) destSelect.value = data.destination_id;
+        }
+
+        // Dropdown loại khách sạn
+        if (data.hotel_type_id) {
+            const hotelTypeSelect = document.getElementById('hotel_type_id');
+            if (hotelTypeSelect) hotelTypeSelect.value = data.hotel_type_id;
+        }
+
+        // Thông tin liên hệ
+        document.getElementById('phone').value = data.phone || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('website').value = data.website || '';
+
+        // Vị trí tọa độ
+        if (data.location) {
+            document.getElementById('latitude').value = data.location.latitude ?? '';
+            document.getElementById('longitude').value = data.location.longitude ?? '';
+        } else {
+            document.getElementById('latitude').value = '';
+            document.getElementById('longitude').value = '';
+        }
+
+        // Đánh giá
+        document.getElementById('rating').value = data.rating ?? '';
+        document.getElementById('reviewCount').value = data.reviewCount ?? '';
+
+        // Tiện ích
+        if (Array.isArray(data.amenities)) {
+            document.getElementById('amenities').value = data.amenities.join(', ');
+        } else {
+            document.getElementById('amenities').value = '';
+        }
+
+        // Ảnh
+        if (Array.isArray(data.imageUrls)) {
+            document.getElementById('imageUrls').value = data.imageUrls.join(', ');
+        } else {
+            document.getElementById('imageUrls').value = '';
+        }
+
+        // Chính sách
+        if (data.policies) {
+            document.getElementById('checkinTime').value = data.policies.checkinTime || '';
+            document.getElementById('checkoutTime').value = data.policies.checkoutTime || '';
+            document.getElementById('cancellationPolicy').value = data.policies.cancellationPolicy || '';
+            document.getElementById('childrenPolicy').value = data.policies.childrenPolicy || '';
+        } else {
+            document.getElementById('checkinTime').value = '';
+            document.getElementById('checkoutTime').value = '';
+            document.getElementById('cancellationPolicy').value = '';
+            document.getElementById('childrenPolicy').value = '';
+        }
+
+        // Trạng thái hoạt động
+        if (typeof data.isActive !== 'undefined') {
+            document.getElementById('isActive').value = data.isActive.toString();
+        }
+
+        // Xóa phòng hiện có
+        clearRoomFields();
+
+        // Phòng có sẵn
+        if (Array.isArray(data.rooms)) {
+            data.rooms.forEach(room => addRoomField(room));
+        }
+
+        toggleModal(true);
     } catch (error) {
-        console.error("Lỗi khi lấy thông tin khách sạn: ", error);
+        console.error("Lỗi khi lấy thông tin khách sạn:", error);
         alert("Đã xảy ra lỗi khi tải dữ liệu.");
     }
 };
+
+function clearRoomFields() {
+    const roomsContainer = document.getElementById('roomsContainer');
+    if (roomsContainer) {
+        roomsContainer.innerHTML = ''; // Xóa toàn bộ nội dung bên trong
+    }
+}
+
 
 // --- Hàm xử lý khi submit form (Thêm mới hoặc Cập nhật) ---
 const handleFormSubmit = async (event) => {
@@ -268,13 +363,13 @@ const handleDeleteHotel = async (id) => {
 // Tải dữ liệu lần đầu khi trang được mở
 document.addEventListener('DOMContentLoaded', () => {
     renderHotels(); // Hàm này vẫn giữ nguyên
-    
+
     // GỌI HÀM MỚI Ở ĐÂY
     // Giả sử collection 'destinations' có trường tên là 'name'
-    populateDropdown('destination_id', 'destinations', 'name'); 
-    
-    // Giả sử collection 'hotel_types' có trường tên là 'type_name'
-    populateDropdown('hotel_type_id', 'hotel_types', 'type_name'); 
+    populateDropdown('destination_id', 'destinations', 'name');
+
+    // Giả sử collection 'hotel_types' có trường tên là 'name'
+    populateDropdown('hotel_type_id', 'hotel_types', 'name');
 });
 // Sự kiện mở modal để thêm mới
 btnAddHotel.addEventListener('click', () => {
@@ -324,7 +419,7 @@ const populateDropdown = async (elementId, collectionName, textField) => {
         const querySnapshot = await getDocs(collection(db, collectionName));
         querySnapshot.forEach((doc) => {
             const option = document.createElement('option');
-            option.value = doc.id; // Giá trị là ID của document
+            option.value = doc.data()[textField]; // Giá trị là ID của document
             option.textContent = doc.data()[textField]; // Chữ hiển thị là tên
             selectElement.appendChild(option);
         });

@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Quản Lý Khách Sạn</title>
-  
+
   <link rel="stylesheet" href="/client/src/css/admin_hotel_style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-   <body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<body>
   <div class="dashboard-container">
 
-     <nav class="sidebar">
+    <nav class="sidebar">
       <div class="sidebar-header">
         <h3>Admin Panel</h3>
       </div>
       <ul class="sidebar-menu">
-        <li><a href="admin.html" ><i class="fas fa-users"></i> Người Dùng</a></li>
+        <li><a href="admin.html"><i class="fas fa-users"></i> Người Dùng</a></li>
         <li><a href="admin_destinations.html"><i class="fas fa-map-marked-alt"></i> Địa Điểm</a></li>
-        <li><a href="admin_hotels.html" class="active" ><i class="fas fa-hotel"></i> Khách Sạn</a></li>
+        <li><a href="admin_hotels.html" class="active"><i class="fas fa-hotel"></i> Khách Sạn</a></li>
         <li><a href="admin_bookings.html"><i class="fas fa-calendar-check"></i> Đặt Phòng</a></li>
       </ul>
       <div class="sidebar-footer">
         <button id="logout-btn" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</button>
       </div>
     </nav>
-  <div class="container">
-    <h1>Quản Lý Khách Sạn</h1>
-    <button id="btnAddHotel">Thêm khách sạn mới</button>
-    <table id="hotelTable">
-      <thead>
-        <tr>
-          <th>Tên khách sạn</th>
-          <th>Địa chỉ</th>
-          <th>Loại khách sạn</th>
-          <th>Điểm đánh giá</th>
-          <th>Số đánh giá</th>
-          <th>Trạng thái</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Dữ liệu khách sạn sẽ được đổ vào đây -->
-      </tbody>
-    </table>
+    <div class="container">
+      <h1>Quản Lý Khách Sạn</h1>
+      <button id="btnAddHotel">Thêm khách sạn mới</button>
+      <table id="hotelTable">
+        <thead>
+          <tr>
+            <th>Tên khách sạn</th>
+            <th>Địa chỉ</th>
+            <th>Loại khách sạn</th>
+            <th>Điểm đánh giá</th>
+            <th>Số đánh giá</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dữ liệu khách sạn sẽ được đổ vào đây -->
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
   <!-- Form Thêm / Sửa khách sạn -->
   <div id="hotelFormModal" class="modal">
     <div class="modal-content">
@@ -59,18 +61,18 @@
         <label for="slug">Slug:</label>
         <input type="text" id="slug" required />
 
-       <!-- THÊM DÒNG NÀY VÀO -->
-<label for="destination_id">Địa điểm:</label>
-<select id="destination_id" required>
-  <option value="" disabled selected>-- Đang tải địa điểm... --</option>
-  <!-- JavaScript sẽ tự điền các lựa chọn vào đây -->
-</select>
+        <!-- THÊM DÒNG NÀY VÀO -->
+        <label for="destination_id">Địa điểm:</label>
+        <select id="destination_id" required>
+          <option value="" disabled selected>-- Đang tải địa điểm... --</option>
+          <!-- JavaScript sẽ tự điền các lựa chọn vào đây -->
+        </select>
 
-       <label for="hotel_type_id">Loại khách sạn:</label>
-<select id="hotel_type_id" required>
-    <option value="" disabled selected>-- Đang tải loại khách sạn... --</option>
-  <!-- JavaScript sẽ tự điền các lựa chọn vào đây -->
-</select>
+        <label for="hotel_type_id">Loại khách sạn:</label>
+        <select id="hotel_type_id" required>
+          <option value="" disabled selected>-- Đang tải loại khách sạn... --</option>
+          <!-- JavaScript sẽ tự điền các lựa chọn vào đây -->
+        </select>
 
         <label for="address">Địa chỉ:</label>
         <textarea id="address" rows="2" required></textarea>
@@ -137,10 +139,12 @@
           <button type="button" id="btnCancel">Hủy</button>
         </div>
       </form>
+
     </div>
   </div>
 
-<!-- Thay đổi dòng này trong file HTML của bạn -->
-<script type="module" src="/client/src/js/admin_hotel_script.js"></script>
+  <!-- Thay đổi dòng này trong file HTML của bạn -->
+  <script type="module" src="/client/src/js/admin_hotel_script.js"></script>
 </body>
+
 </html>
