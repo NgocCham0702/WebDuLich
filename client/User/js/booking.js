@@ -4,9 +4,11 @@ import { collection, getDocs, addDoc, serverTimestamp, query, where } from "http
 // DOM Elements
 const bookingForm = document.getElementById('bookingForm');
 const hotelTypeSelect = document.getElementById('hotelType');
-const hotelNameSelect = document.getElementById('hotelName');
-const roomTypeSelect = document.getElementById('roomType');
-const guestsSelect = document.getElementById('guests');
+const hotelNameSelect = document.getElementById('hotelNameSelect');
+hotelNameSelect.addEventListener('change', updateRoomOptions);
+const roomTypeSelect = document.getElementById('roomTypeSelect');
+roomTypeSelect.addEventListener('change', updateGuestsByRoom);
+const guestsInput = document.getElementById('guests');
 const priceRangeInput = document.getElementById('priceRange');
 const checkInInput = document.getElementById('checkIn');
 const checkOutInput = document.getElementById('checkOut');
@@ -85,22 +87,42 @@ function updateHotelNameOptions() {
 
 // Update room types based on selected hotel
 function updateRoomOptions() {
-    const selectedHotelId = hotelNameSelect.value;
-    // roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
-    priceRangeInput.value = '';
+    const hotelNameSelect = document.getElementById('hotelNameSelect');
+    const roomTypeSelect = document.getElementById('roomTypeSelect');
+    const guestsInput = document.getElementById('guests');
 
-    if (selectedHotelId) {
-        const selectedHotel = allHotelsData.find(hotel => hotel.id === selectedHotelId);
-        if (selectedHotel && selectedHotel.data.availableRooms) {
-            selectedHotel.data.availableRooms.forEach(room => {
-                const option = new Option(`${room.roomTypeName} (tối đa ${room.maxGuests} khách)`, room.roomTypeName);
-                option.dataset.price = room.basePrice;
-                option.dataset.maxGuests = room.maxGuests;
-                roomTypeSelect.add(option);
-            });
-        }
+    const selectedHotelId = hotelNameSelect.value;
+    roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+    guestsInput.value = ''; // reset số khách khi đổi khách sạn
+
+    if (!selectedHotelId) return;
+
+    const selectedHotel = allHotelsData.find(hotel => hotel.id === selectedHotelId);
+    if (selectedHotel && selectedHotel.data.availableRooms) {
+        selectedHotel.data.availableRooms.forEach(room => {
+            const option = new Option(room.roomTypeName, room.roomTypeName);
+            option.dataset.price = room.basePrice;
+            option.dataset.maxGuests = room.maxGuests;
+            roomTypeSelect.add(option);
+        });
     }
 }
+
+
+function updateGuestsByRoom() {
+    const guestsInput = document.getElementById('guests');
+    const roomTypeSelect = document.getElementById('roomTypeSelect');
+    const selectedOption = roomTypeSelect.selectedOptions[0];
+
+    if (selectedOption && selectedOption.dataset.maxGuests) {
+        guestsInput.value = selectedOption.dataset.maxGuests;
+    } else {
+        guestsInput.value = '';
+    }
+}
+
+
+
 
 // Calculate and update price
 function updatePrice() {
@@ -162,7 +184,7 @@ hotelNameSelect.addEventListener('change', () => {
     updateRoomOptions();
     priceRangeInput.value = '';
 });
-roomTypeSelect.addEventListener('change', updatePrice);
+roomTypeSelect.addEventListener('change', updateGuestsByRoom);
 checkInInput.addEventListener('change', updatePrice);
 checkOutInput.addEventListener('change', updatePrice);
 

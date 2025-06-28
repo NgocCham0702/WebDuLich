@@ -123,23 +123,20 @@
             </select>
           </div>
           <div>
-            <label for="hotelName" class="block text-pink-700 font-semibold mb-2">Tên Khách Sạn</label>
-            <select id="hotelName" name="hotelName"
+            <label for="hotelNameSelect" class="block text-pink-700 font-semibold mb-2">Tên Khách Sạn</label>
+            <select id="hotelNameSelect" name="hotelName"
               class="w-full rounded-lg border border-pink-300 px-4 py-3 bg-pink-50 focus:outline-none focus:ring-4 focus:ring-pink-300"
               required>
               <option value="" disabled selected>Chọn tên khách sạn</option>
             </select>
           </div>
           <div>
-            <label for="roomType" class="block text-pink-700 font-semibold mb-2">Loại Phòng</label>
-            <select id="roomType" name="roomType"
+            <label for="roomTypeSelect" class="block text-pink-700 font-semibold mb-2">Loại Phòng</label>
+            <select id="roomTypeSelect" name="roomType"
               class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
               required>
               <option value="" disabled selected>Chọn loại phòng</option>
-              <option value="Đơn">Phòng Đơn</option>
-              <option value="Đôi">Phòng Đôi</option>
-              <option value="Suite">Phòng Suite</option>
-              <option value="Gia Đình">Phòng Gia Đình</option>
+
             </select>
           </div>
           <div>
@@ -148,14 +145,13 @@
               class="w-full rounded-lg border border-pink-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-pink-300"
               required>
               <option value="" disabled selected>Chọn số khách</option>
-              <option value="1">1 khách</option>
-              <option value="2">2 khách</option>
-              <option value="3">3 khách</option>
-              <option value="4">4 khách</option>
-              <option value="5">5 khách</option>
-              <option value="6">6 khách</option>
+              <option value="1" disabled selected>1 khách</option>
+              <option value="2" disabled selected>2 khách</option>
+              <option value="3" disabled selected>3 khách</option>
+              <option value="4" disabled selected>4 khách</option>
             </select>
           </div>
+
           <div>
             <label for="priceRange" class="block text-pink-700 font-semibold mb-2">Giá Dự Kiến (VNĐ)</label>
             <input type="text" id="priceRange" name="priceRange" readonly

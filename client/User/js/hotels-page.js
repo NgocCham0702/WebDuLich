@@ -25,26 +25,26 @@ let hotelTypesMap = new Map();
  */
 function createHotelCard(hotelData, hotelId) {
     const imageUrl = hotelData.imageUrls?.[0] || hotelData.image || 'https://via.placeholder.com/400x300.png';
-    const destinationName = destinationsMap.get(hotelData.destination_id) || 'Không rõ';
     const basePrice = hotelData.availableRooms?.[0]?.basePrice || hotelData.price || 0;
-    const description = hotelData.description || '';
+    // Lấy tên khách sạn
+    const name = hotelData.name || "Tên khách sạn không có";
 
+    // Lấy đánh giá (rating)
+    const rating = hotelData.rating || "Chưa có đánh giá";
+
+    // Lấy địa chỉ
+    const address = hotelData.address || "Địa chỉ chưa cập nhật";
     return `
         <div class="hotel-card" data-hotel-id="${hotelId}">
-            <img src="${imageUrl}" alt="${hotelData.name}" class="hotel-card-image">
+            <img src="${imageUrl}" alt="${name}" class="hotel-card-image">
             <div class="hotel-card-content">
-                <h3 class="hotel-card-title">${hotelData.name}</h3>
-                <p class="hotel-card-description">${description}</p>
+                <h3 class="hotel-card-title">${name}</h3>
+                <p class="hotel-card-address">${address}</p>
                 <div class="hotel-card-info-row">
-                    
-                    <span class="hotel-card-price">
-                        ${basePrice.toLocaleString('vi-VN')}₫ / đêm
-                    </span>
-                    <span class="hotel-card-rating">
-                        ${hotelData.rating} <i class="fas fa-star"></i>
-                    </span>
+                    <span class="hotel-card-price">${basePrice.toLocaleString('vi-VN')}₫ / đêm</span>
+                    <span class="hotel-card-rating">${rating} <i class="fas fa-star" style="color:#f4a261"></i></span>
                 </div>
-<a href="/client/User/page/dat phong.html?hotelId=${hotelId}" class="hotel-card-book-btn">Đặt phòng</a>
+                <a href="/client/User/page/dat phong.html?hotelId=${hotelId}" class="hotel-card-book-btn">Đặt phòng</a>
             </div>
         </div>
     `;
@@ -56,15 +56,12 @@ function createHotelCard(hotelData, hotelId) {
  */
 function renderHotels(hotels) {
     hotelsGrid.innerHTML = '';
-    if (hotels.length === 0) {
-        hotelsGrid.innerHTML = `<p class="col-span-full text-center text-gray-500">Không tìm thấy khách sạn nào phù hợp.</p>`;
-        return;
-    }
     hotels.forEach(hotel => {
         const cardHtml = createHotelCard(hotel.data, hotel.id);
         hotelsGrid.insertAdjacentHTML('beforeend', cardHtml);
     });
 }
+
 
 /**
  * Tạo nội dung HTML chi tiết cho popup
