@@ -16,105 +16,8 @@
 </head>
 
 <body class="bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-50 font-poppins min-h-screen flex flex-col">
-  <header class="fixed w-full bg-white/90 backdrop-blur-md shadow-lg z-50">
-    <div class="container mx-auto flex justify-between items-center px-6 py-4">
-      <!-- Phần logo giữ nguyên -->
-      <a class="text-3xl font-sacramento text-pink-600 tracking-wider hover:text-rose-500 transition flex items-center gap-2"
-        href="../client/index.html">
-        <img alt="Logo hình chiếc la bàn màu hồng pastel" class="w-10 h-10 animate-bounce" height="40"
-          src="https://storage.googleapis.com/a1aa/image/e67d88f9-94c4-4c53-4507-85a5dd30ea04.jpg" width="40" />
-        <span
-          class="relative before:absolute before:-bottom-2 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-rose-400 before:via-pink-500 before:to-purple-600 before:rounded before:opacity-70 before:blur-sm">
-          Khám Phá
-        </span>
-      </a>
+  <header id="header-placeholder" class="fixed w-full bg-white/90 backdrop-blur-md shadow-lg z-50">
 
-      <!-- Gom các mục bên phải vào một div để dễ quản lý -->
-      <div class="flex items-center gap-4">
-        <!-- Navigation cho màn hình lớn -->
-        <nav class="space-x-8 text-pink-600 font-semibold text-lg hidden md:flex">
-          <a class="relative group px-3 py-1 rounded-lg bg-gradient-to-r from-rose-400 via-pink-500 to-purple-600 text-white shadow-lg hover:shadow-2xl transition flex items-center gap-1"
-            href="/client/User/page/danh sach dia danh.html">
-            <i class="fas fa-map-marked-alt text-white text-xl"></i>
-            <span>Địa Danh</span>
-            <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-white rounded"></span>
-          </a>
-          <a class="relative group px-3 py-1 rounded-lg bg-gradient-to-r from-purple-500 via-pink-500 to-rose-400 text-white shadow-lg hover:shadow-2xl transition flex items-center gap-1"
-            href="../client/User/page/danh sach khach san.html">
-            <i class="fas fa-hotel text-white text-xl"></i>
-            <span>Khách Sạn</span>
-            <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-white rounded"></span>
-          </a>
-        </nav>
-
-        <!-- PHẦN THÊM MỚI 1: Nút cho khách (Chưa đăng nhập) -->
-        <div id="guest-controls" class="hidden md:flex items-center gap-3">
-          <a href="/client/User/dangnhap.html"
-            class="px-4 py-2 text-pink-600 font-semibold rounded-lg hover:bg-rose-100 transition">Đăng nhập</a>
-          <a href="./User/dangky.html"
-            class="px-4 py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-rose-400 via-pink-500 to-purple-600 shadow-md hover:shadow-lg transition">Đăng
-            ký</a>
-        </div>
-
-        <!-- PHẦN THÊM MỚI 2: Thông tin người dùng (Sau khi đăng nhập) -->
-        <div id="user-controls" class="hidden md:flex items-center gap-4">
-          <div class="flex items-center gap-2 cursor-pointer group">
-            <i class="fas fa-user-circle text-3xl text-pink-500 group-hover:text-rose-500 transition"></i>
-            <span id="user-name-display" class="font-semibold text-rose-700 group-hover:text-pink-600 transition">Tên
-              Tài Khoản</span>
-          </div>
-          <button id="logout-button" class="text-gray-500 hover:text-red-500 transition" title="Đăng xuất">
-            <i class="fas fa-sign-out-alt text-xl"></i>
-          </button>
-        </div>
-
-        <!-- Nút menu trên di động -->
-        <button aria-label="Mở menu" class="md:hidden text-pink-600 text-3xl focus:outline-none" id="menu-btn">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Menu trên di động -->
-    <nav id="mobile-menu"
-      class="hidden flex-col bg-white shadow-xl absolute top-16 right-6 rounded-xl w-64 py-5 px-8 md:hidden z-40 ring-1 ring-rose-300">
-      <!-- Các mục điều hướng chính -->
-      <a class="block text-pink-600 font-semibold hover:text-rose-500 transition text-lg flex items-center gap-3"
-        href="./User/page/danh sach dia danh.html">
-        <i class="fas fa-map-marked-alt text-rose-400 text-xl"></i>
-        Địa Danh
-      </a>
-      <a class="block text-pink-600 font-semibold hover:text-rose-500 transition text-lg flex items-center gap-3 mt-4"
-        href="./User/page/danh sach khach san.html">
-        <i class="fas fa-hotel text-rose-400 text-xl"></i>
-        Khách Sạn
-      </a>
-
-      <!-- Đường kẻ phân cách -->
-      <hr class="my-4 border-rose-200">
-      <!-- PHẦN THÊM MỚI 3: Nút cho khách (trong menu di động) -->
-      <div id="mobile-guest-controls" class="flex flex-col space-y-4">
-        <a href="../client/User/dangnhap.html"
-          class="text-center px-4 py-2 text-pink-600 font-semibold rounded-lg bg-rose-50 border border-rose-200 hover:bg-rose-100 transition">Đăng
-          nhập</a>
-        <a href="../client/User/dangky.html"
-          class="text-center px-4 py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-rose-400 to-pink-500 shadow-md hover:shadow-lg transition">Đăng
-          ký</a>
-      </div>
-
-      <!-- PHẦN THÊM MỚI 4: Thông tin người dùng (trong menu di động) -->
-      <div id="mobile-user-controls" class="hidden flex-col space-y-4">
-        <div class="flex items-center gap-3 border-b border-rose-100 pb-4">
-          <i class="fas fa-user-circle text-pink-500 text-2xl"></i>
-          <span id="mobile-user-name-display" class="font-semibold text-rose-700">Tên Tài Khoản</span>
-        </div>
-        <button id="mobile-logout-button"
-          class="w-full flex items-center justify-center gap-3 px-4 py-2 text-red-500 font-semibold rounded-lg hover:bg-red-50 transition">
-          <i class="fas fa-sign-out-alt"></i>
-          Đăng xuất
-        </button>
-      </div>
-    </nav>
   </header>
   <main class="flex-grow container mx-auto px-6 pt-32 pb-16 max-w-6xl">
     <section class="flex flex-col-reverse lg:flex-row items-center gap-12">
@@ -275,18 +178,7 @@
       </div>
     </div>
   </footer>
-  <script>
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.querySelector('header nav.md\\:hidden');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-    window.addEventListener('click', (e) => {
-      if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-        mobileMenu.classList.add('hidden');
-      }
-    });
-  </script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@400;600;700&display=swap');
 
@@ -310,7 +202,7 @@
       animation: float 4s ease-in-out infinite;
     }
   </style>
-  <script type="module" src="../client/src/js/auth_check.js"></script>
+  <script type="module" src="/client/User/js/main-layout.js"></script>
 </body>
 
 </html>
