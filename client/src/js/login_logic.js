@@ -1,24 +1,27 @@
 // ===================================================================
-// FILE LOGIC CHO TRANG ĐĂNG NHẬP (PHIÊN BẢN CÓ CHẨN ĐOÁN LỖI)
+// FILE LOGIC CHO TRANG ĐĂNG NHẬP (CÓ EMAIL/PASSWORD VÀ GOOGLE)
 // ===================================================================
 
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { auth, db } from './firebase-config.js'; 
+// --- THÊM MỚI ---: Import các hàm cần thiết cho Google Auth và Firestore write
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { auth, db } from './firebase-config.js';
 
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
+// --- THÊM MỚI ---: Lấy nút đăng nhập Google từ DOM
+const googleLoginBtn = document.getElementById('google-login-btn');
 
 async function checkRoleAndRedirect(user) {
     if (!user) {
         console.error("LỖI LOGIC: Hàm checkRoleAndRedirect được gọi nhưng không có 'user'.");
         return;
     }
-    
+
     console.log(`Bắt đầu kiểm tra vai trò cho người dùng có UID: ${user.uid}`);
     const userDocRef = doc(db, "users", user.uid);
-    
+
     try {
         console.log(`🔍 Đang gửi yêu cầu đến Firestore để lấy document tại: users/${user.uid}`);
         const userDocSnap = await getDoc(userDocRef);
@@ -26,7 +29,7 @@ async function checkRoleAndRedirect(user) {
         if (userDocSnap.exists()) {
             console.log("✅ Yêu cầu thành công! Document người dùng TỒN TẠI.");
             console.log("Dữ liệu nhận được:", userDocSnap.data());
-            
+
             const role = userDocSnap.data().role;
             if (role === 'admin') {
                 console.log("🎉 Vai trò là 'admin'. Chuyển hướng đến trang Admin...");
@@ -49,6 +52,7 @@ async function checkRoleAndRedirect(user) {
     }
 }
 
+// Xử lý đăng nhập bằng Email/Password (giữ nguyên)
 if (loginForm) {
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -75,4 +79,49 @@ if (loginForm) {
                 }
             });
     });
+}
+
+// --- THÊM MỚI ---: Hàm xử lý đăng nhập bằng Google
+async function handleGoogleLogin() {
+    const provider = new GoogleAuthProvider();
+    try {
+        console.log("🚀 Bắt đầu quá trình đăng nhập bằng Google...");
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        console.log("✅ Xác thực Google thành công! Thông tin người dùng:", user);
+
+        // **Quan trọng**: Kiểm tra xem người dùng này đã tồn tại trong Firestore chưa
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+            // Nếu người dùng chưa tồn tại, tạo mới document cho họ
+            console.log("🤔 Người dùng mới! Đang tạo bản ghi trong Firestore...");
+            await setDoc(userDocRef, {
+                email: user.email,
+                displayName: user.displayName,
+                role: 'user', // Gán vai trò mặc định là 'user'
+                createdAt: new Date() // Thêm thông tin ngày tạo
+            });
+            console.log("✅ Đã tạo thành công bản ghi cho người dùng mới.");
+        } else {
+            console.log("👋 Chào mừng người dùng cũ quay trở lại!");
+        }
+
+        // Sau khi đã đảm bảo có document, tiến hành kiểm tra vai trò và chuyển hướng
+        await checkRoleAndRedirect(user);
+
+    } catch (error) {
+        console.error("❌ Lỗi trong quá trình đăng nhập bằng Google:", error.code, error.message);
+        if (error.code === 'auth/popup-closed-by-user') {
+            alert("Bạn đã đóng cửa sổ đăng nhập. Vui lòng thử lại.");
+        } else {
+            alert("Đã có lỗi xảy ra khi đăng nhập bằng Google.");
+        }
+    }
+}
+
+// --- THÊM MỚI ---: Gán sự kiện click cho nút Google
+if (googleLoginBtn) {
+    googleLoginBtn.addEventListener('click', handleGoogleLogin);
 }

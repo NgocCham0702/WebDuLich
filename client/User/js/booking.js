@@ -5,10 +5,11 @@ import { collection, getDocs, addDoc, serverTimestamp, query, where } from "http
 const bookingForm = document.getElementById('bookingForm');
 const hotelTypeSelect = document.getElementById('hotelType');
 const hotelNameSelect = document.getElementById('hotelNameSelect');
-hotelNameSelect.addEventListener('change', updateRoomOptions);
 const roomTypeSelect = document.getElementById('roomTypeSelect');
-roomTypeSelect.addEventListener('change', updateGuestsByRoom);
-const guestsInput = document.getElementById('guests');
+// --- THAY ĐỔI BẮT ĐẦU ---
+// Đổi tên biến để phản ánh đúng thẻ <select>
+const guestsSelect = document.getElementById('guests');
+// --- THAY ĐỔI KẾT THÚC ---
 const priceRangeInput = document.getElementById('priceRange');
 const checkInInput = document.getElementById('checkIn');
 const checkOutInput = document.getElementById('checkOut');
@@ -18,37 +19,32 @@ const messageText = document.getElementById('messageText');
 // Data cache
 let hotelTypesData = [];
 let allHotelsData = [];
+
 function showMessage(message, isSuccess) {
     messageText.textContent = message;
-    // Reset class và thêm các class cơ bản
     messageBox.className = 'fixed top-4 left-1/2 -translate-x-1/2 rounded-3xl px-10 py-4 shadow-2xl flex items-center gap-4 opacity-0 pointer-events-none select-none z-50 transition-all duration-300';
 
-    // Thay đổi màu chữ và nền theo isSuccess
     if (isSuccess) {
-        // Nền trắng, chữ màu đỏ (đỏ đậm)
-        messageBox.style.backgroundColor = '#ffffff'; // nền trắng
-        messageBox.style.color = '#dc2626'; // màu đỏ (Tailwind red-600)
+        messageBox.style.backgroundColor = '#ffffff';
+        messageBox.style.color = '#16a34a'; // Green-600 for success
         messageBox.querySelector('i').className = "fas fa-check-circle text-3xl";
-        messageBox.querySelector('i').style.color = '#dc2626'; // icon màu đỏ
+        messageBox.querySelector('i').style.color = '#16a34a';
     } else {
-        // Nền trắng, chữ màu đỏ (đỏ đậm)
-        messageBox.style.backgroundColor = '#ffffff'; // nền trắng
-        messageBox.style.color = '#dc2626'; // màu đỏ
+        messageBox.style.backgroundColor = '#ffffff';
+        messageBox.style.color = '#dc2626'; // Red-600 for error
         messageBox.querySelector('i').className = "fas fa-times-circle text-3xl";
-        messageBox.querySelector('i').style.color = '#dc2626'; // icon màu đỏ
+        messageBox.querySelector('i').style.color = '#dc2626';
     }
 
     messageBox.classList.add('show', 'opacity-100', 'top-8');
 
     setTimeout(() => {
         messageBox.classList.remove('show', 'opacity-100', 'top-8');
-        // Reset style sau khi ẩn
         messageBox.style.backgroundColor = '';
         messageBox.style.color = '';
         messageBox.querySelector('i').style.color = '';
     }, 4000);
 }
-
 
 // Load hotel types and hotels
 async function initializeBookingForm() {
@@ -74,8 +70,14 @@ async function initializeBookingForm() {
 function updateHotelNameOptions() {
     const selectedTypeId = hotelTypeSelect.value;
     hotelNameSelect.innerHTML = '<option value="" disabled selected>Chọn tên khách sạn</option>';
-    //roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+    roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
     priceRangeInput.value = '';
+
+    // --- THAY ĐỔI BẮT ĐẦU ---
+    // Cũng reset và vô hiệu hóa dropdown số khách khi loại khách sạn thay đổi
+    guestsSelect.innerHTML = '<option value="" disabled selected>Chọn số khách</option>';
+    guestsSelect.disabled = true;
+    // --- THAY ĐỔI KẾT THÚC ---
 
     if (selectedTypeId) {
         const filteredHotels = allHotelsData.filter(hotel => hotel.data.hotel_type_id === selectedTypeId);
@@ -87,13 +89,14 @@ function updateHotelNameOptions() {
 
 // Update room types based on selected hotel
 function updateRoomOptions() {
-    const hotelNameSelect = document.getElementById('hotelNameSelect');
-    const roomTypeSelect = document.getElementById('roomTypeSelect');
-    const guestsInput = document.getElementById('guests');
-
     const selectedHotelId = hotelNameSelect.value;
     roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
-    guestsInput.value = ''; // reset số khách khi đổi khách sạn
+
+    // --- THAY ĐỔI BẮT ĐẦU ---
+    // Reset và vô hiệu hóa dropdown số khách khi khách sạn thay đổi
+    guestsSelect.innerHTML = '<option value="" disabled selected>Chọn số khách</option>';
+    guestsSelect.disabled = true;
+    // --- THAY ĐỔI KẾT THÚC ---
 
     if (!selectedHotelId) return;
 
@@ -108,20 +111,32 @@ function updateRoomOptions() {
     }
 }
 
-
+// --- THAY ĐỔI BẮT ĐẦU ---
+// Cập nhật lại hoàn toàn hàm này để tạo options cho select
 function updateGuestsByRoom() {
-    const guestsInput = document.getElementById('guests');
-    const roomTypeSelect = document.getElementById('roomTypeSelect');
     const selectedOption = roomTypeSelect.selectedOptions[0];
 
+    // 1. Reset và vô hiệu hóa select trước
+    guestsSelect.innerHTML = '<option value="" disabled selected>Chọn số khách</option>';
+    guestsSelect.disabled = true;
+
+    // 2. Nếu có phòng được chọn và có thông tin maxGuests
     if (selectedOption && selectedOption.dataset.maxGuests) {
-        guestsInput.value = selectedOption.dataset.maxGuests;
-    } else {
-        guestsInput.value = '';
+        const maxGuests = parseInt(selectedOption.dataset.maxGuests, 10);
+
+        // 3. Tạo các option từ 1 đến maxGuests
+        for (let i = 1; i <= maxGuests; i++) {
+            const optionText = `${i} khách`;
+            const option = new Option(optionText, i);
+            guestsSelect.add(option);
+        }
+
+        // 4. Kích hoạt lại select
+        guestsSelect.disabled = false;
     }
+    // Nếu không có phòng được chọn, select sẽ giữ trạng thái reset và disabled
 }
-
-
+// --- THAY ĐỔI KẾT THÚC ---
 
 
 // Calculate and update price
@@ -170,21 +185,29 @@ async function selectHotelById(hotelId) {
 
     if (roomTypeSelect.options.length > 1) {
         roomTypeSelect.selectedIndex = 1;
+        // --- THAY ĐỔI BẮT ĐẦU ---
+        // Kích hoạt cập nhật số khách và giá khi chọn phòng tự động
+        updateGuestsByRoom();
         updatePrice();
+        // --- THAY ĐỔI KẾT THÚC ---
     }
 }
 
 // Event listeners
 hotelTypeSelect.addEventListener('change', () => {
     updateHotelNameOptions();
-    // roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
     priceRangeInput.value = '';
 });
 hotelNameSelect.addEventListener('change', () => {
     updateRoomOptions();
     priceRangeInput.value = '';
 });
+
+// --- THAY ĐỔI BẮT ĐẦU ---
+// Các listener này đã có sẵn và giờ sẽ hoạt động đúng với logic mới
 roomTypeSelect.addEventListener('change', updateGuestsByRoom);
+roomTypeSelect.addEventListener('change', updatePrice); // Thêm listener này để giá cập nhật khi đổi phòng
+// --- THAY ĐỔI KẾT THÚC ---
 checkInInput.addEventListener('change', updatePrice);
 checkOutInput.addEventListener('change', updatePrice);
 
@@ -214,7 +237,10 @@ bookingForm.addEventListener('submit', async (e) => {
         hotelTypeId: hotelTypeSelect.value,
         hotelType: hotelTypeSelect.options[hotelTypeSelect.selectedIndex]?.text || '',
         roomType: roomTypeSelect.value,
+        // --- THAY ĐỔI BẮT ĐẦU ---
+        // Lấy giá trị từ guestsSelect, không cần sửa đổi gì ở đây
         guests: Number(guestsSelect.value),
+        // --- THAY ĐỔI KẾT THÚC ---
         checkinDate: checkInDate,
         checkoutDate: checkOutDate,
         totalPrice: totalPrice,
@@ -228,6 +254,11 @@ bookingForm.addEventListener('submit', async (e) => {
         bookingForm.reset();
         hotelNameSelect.innerHTML = '<option value="" disabled selected>Chọn tên khách sạn</option>';
         roomTypeSelect.innerHTML = '<option value="" disabled selected>Chọn loại phòng</option>';
+        // --- THAY ĐỔI BẮT ĐẦU ---
+        // Reset cả dropdown số khách sau khi submit thành công
+        guestsSelect.innerHTML = '<option value="" disabled selected>Chọn số khách</option>';
+        guestsSelect.disabled = true;
+        // --- THAY ĐỔI KẾT THÚC ---
         priceRangeInput.value = '';
     } catch (error) {
         console.error("Lỗi khi thêm booking: ", error);
@@ -240,6 +271,8 @@ bookingForm.addEventListener('submit', async (e) => {
 
 // Initialize form and select hotel if hotelId in URL
 document.addEventListener('DOMContentLoaded', async () => {
+    // Vô hiệu hóa dropdown số khách lúc đầu
+    guestsSelect.disabled = true;
     await initializeBookingForm();
     const hotelId = getHotelIdFromUrl();
     if (hotelId) {
