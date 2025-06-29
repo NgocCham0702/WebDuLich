@@ -1,10 +1,10 @@
 // Import các thành phần cần thiết từ config và Firebase SDK
 import { db, auth } from './firebase-config.js';
-import { 
-    collection, 
-    getDocs, 
-    doc, 
-    updateDoc, 
+import {
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
     deleteDoc,
     getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -49,11 +49,11 @@ onAuthStateChanged(auth, async (user) => {
  */
 async function loadUsers() {
     usersTableBody.innerHTML = '<tr><td colspan="4">Đang tải dữ liệu...</td></tr>';
-    
+
     try {
         const usersCollection = collection(db, 'users');
         const querySnapshot = await getDocs(usersCollection);
-        
+
         // Xóa nội dung "Đang tải"
         usersTableBody.innerHTML = '';
 
@@ -67,7 +67,7 @@ async function loadUsers() {
             const userId = doc.id; // Lấy UID của user
 
             // Format ngày tham gia
-            const joinDate = userData.createdAt?.toDate().toLocaleDateString('vi-VN') || 'Không rõ';
+            const joinDate = userData.created_at?.toDate().toLocaleDateString('vi-VN') || 'Không rõ';
 
             const row = `
                 <tr>
