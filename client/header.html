@@ -29,7 +29,7 @@
         </nav>
 
         <!-- Controls cho khách (chưa đăng nhập) -->
-        <div id="guest-controls" class="hidden md:flex items-center gap-3">
+        <div id="guest-controls" class=" md:flex items-center gap-3">
             <a href="/client/User/dangnhap.html"
                 class="px-4 py-2 text-pink-600 font-semibold rounded-lg hover:bg-rose-100 transition">Đăng nhập</a>
             <a href="/client/User/dangky.html"
@@ -38,16 +38,7 @@
         </div>
 
         <!-- Controls cho user (đã đăng nhập) -->
-        <div id="user-controls" class="hidden md:flex items-center gap-4">
-            <div class="flex items-center gap-2 cursor-pointer group">
-                <i class="fas fa-user-circle text-3xl text-pink-500 group-hover:text-rose-500 transition"></i>
-                <span id="user-name-display"
-                    class="font-semibold text-rose-700 group-hover:text-pink-600 transition">Tên Tài Khoản</span>
-            </div>
-            <button id="logout-button" class="text-gray-500 hover:text-red-500 transition" title="Đăng xuất">
-                <i class="fas fa-sign-out-alt text-xl"></i>
-            </button>
-        </div>
+
 
         <!-- Nút menu mobile -->
         <button aria-label="Mở menu" class="md:hidden text-pink-600 text-3xl focus:outline-none" id="menu-btn">
